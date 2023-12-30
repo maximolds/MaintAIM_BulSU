@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FiShoppingCart } from "react-icons/fi";
 import { BsChatLeft } from "react-icons/bs";
@@ -10,6 +10,8 @@ import { Cart, Email, Notifications, UserProfile } from '.';
 import { useStateContext } from "../contexts/ContextProvider";
 import { UserIcon } from "../assets/icons/UserIcon";
 import { EmailIcon } from "../assets/icons/EmailIcon";
+import axios from "axios";
+
 
 const NavButton = ({ title, customFunc, icon,
   color, dotColor }) => (
@@ -30,10 +32,21 @@ const NavButton = ({ title, customFunc, icon,
   </TooltipComponent>
 );
 
+
+
 const Navbar = () => {
   const { activeMenu, setActiveMenu,
     isClicked, setIsClicked, handleClick,
-    screenSize, setScreenSize, currentColor } = useStateContext();
+    screenSize, setScreenSize, currentColor,
+    showEmailModal, setShowEmailModal, handleOnClose } = useStateContext();
+
+  const [listUsers, setListOfUsers] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/auth").then((response) => {
+      setListOfUsers(response.data);
+    });
+  }, []);
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -74,19 +87,41 @@ const Navbar = () => {
     };
   }, []);
 
+  const EmailButton = ({ title, customFunc, icon,
+    color, dotColor }) => (
+    <TooltipComponent content={title}
+      position="BottomCenter">
+      <button
+        type="button"
+        onClick={() => setShowEmailModal(true)}
+        style={{ color }}
+        className="relative text-xl rounded-full p-3
+        hover:bg-gray-100">
+        <span style={{ background: dotColor }}
+          className="absolute inline-flex 
+          rounded-full h-2 w-2 right-2 top-2"/>
+        {icon}
+
+      </button>
+    </TooltipComponent>
+  );
+
+
+
+
   return (
-    
+
     <div className="flex justify-between relative
     p-2 md:mx-6 mt-20 transition-all duration-300"
-    id="elementid">
+      id="elementid">
       {/* change mt-20 after defense*/}
       <NavButton
         title="Menu"
         customFunc={() => setActiveMenu(
           (prevActiveMenu) => !prevActiveMenu)}
         color={currentColor}
-        icon={<AiOutlineMenu />} 
-        />
+        icon={<AiOutlineMenu />}
+      />
 
       <div className="flex">
         <NavButton
@@ -95,10 +130,9 @@ const Navbar = () => {
           color={currentColor}
           icon={<UserIcon />} />
 
-        <NavButton
+        <EmailButton
           title="Email"
           dotColor='#03C9D7'
-          customFunc={() => handleClick('email')}
           color={currentColor}
           icon={<EmailIcon />} />
 
@@ -118,8 +152,11 @@ const Navbar = () => {
               className="rounded-full w-8 h-8" />
             <p>
               <span className="text-gray-400">Hi, </span> {''}
-              <span className="text-gray-400
-                font-bold ml-1 text-14">Emmanuel</span>
+              {listUsers.filter(user => user.id === 1).map((value, key) => (
+                <span className="text-gray-400
+    font-bold ml-1 text-14">{value.firstname} {value.lastname}</span>
+              ))}
+
             </p>
             <MdKeyboardArrowDown
               className="text-gray-400 text-14" />
@@ -127,7 +164,7 @@ const Navbar = () => {
         </TooltipComponent>
 
         {isClicked.cart && <Cart />}
-        {isClicked.email && <Email />}
+        <Email onClose={handleOnClose} visble={showEmailModal} />
         {isClicked.notifications && <Notifications />}
         {isClicked.userProfile && <UserProfile />}
       </div>
