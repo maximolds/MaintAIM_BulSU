@@ -31,11 +31,23 @@ const HistoryAddRecord = () => {
 
 
     const onSubmit = (data) => {
-        axios.post("http://localhost:3001/maintenancehistory", data).then((response) => {
-            console.log('it worked');
-            navigate(-1);
-        });
+        axios.post("http://localhost:3001/maintenancehistory", data,
+            {
+                headers: {
+                    accessToken: sessionStorage.getItem("accessToken"),
+                }
+            }).then((response) => {
+                if (response.data.error) {
+                    console.log(response.data.error);
+                } else {
+                    username: response.data.username
+                    navigate(-1);
+                }
+
+            });
     };
+
+    
 
 
 
@@ -65,7 +77,7 @@ const HistoryAddRecord = () => {
                                 Save
                             </button>
                             <button
-                                onClick={()=>navigate(-1)}
+                                onClick={() => navigate(-1)}
                                 className={`text-12 font-extrabold opacity-0.9 p-4 hover:bg-white w-80 h-2
                rounded-xl buttonShadow mt-4  
               text-white hover:text-black flex justify-center border-1 border-fade-blue

@@ -21,6 +21,7 @@ export const ContextProvider = ({ children }) => {
     const [currentMode, setCurrentMode] = useState('Light');
     const [themeSettings, setThemeSettings] = useState(false);
     const [showEmailModal, setShowEmailModal] = useState(false);
+    const [showUserProfileModal, setShowUserProfileModal] = useState(false);
     
     const handleOnClose = () => setShowEmailModal(false);
 
@@ -66,7 +67,9 @@ export const ContextProvider = ({ children }) => {
                 setMode,
                 showEmailModal,
                 setShowEmailModal,
-                handleOnClose
+                handleOnClose,
+                showUserProfileModal,
+                setShowUserProfileModal
 
             }}>
             {children}

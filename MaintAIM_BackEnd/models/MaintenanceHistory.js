@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
         previous_date_replaced:{
             type: DataTypes.DATE,
             allowNull: false,
+        },
+        username:{
+            type: DataTypes.STRING,
+            allowNull: false,
         }
     });
 

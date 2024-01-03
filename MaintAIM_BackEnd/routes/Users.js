@@ -4,21 +4,23 @@ const { Users } = require('../models')
 const bcrypt = require('bcrypt')
 const multer = require('multer')
 const path = require('path')
+const { validateToken } = require('../middlewares/AuthMiddleware')
 
 const { sign } = require('jsonwebtoken')
+const { route } = require('./Profile')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'images')
     },
-    filename: (req, file, cb)=>{
+    filename: (req, file, cb) => {
         console.log(file)
         cb(null, Date.now() + path.extname(file.originalname))
     }
 })
 const upload = multer({
     storage: storage,
-   
+
 })
 
 router.post('/', upload.single('picture'), async (req, res) => {
@@ -42,6 +44,16 @@ router.get('/', async (req, res) => {
     res.json(listOfUsers);
 });
 
+//profile
+/*router.get('/', validateToken, async (req, res) => {
+    const username = req.user.username;
+    const listOfProfile = await Users.findAll({
+        where: {
+            username: username
+        }
+    });
+    res.json(listOfProfile);
+}); */
 
 
 
@@ -60,11 +72,14 @@ router.post('/login', async (req, res) => {
         if (!match) return res.json({ error: "Wrong email and password combination" });
 
         const accessToken = sign(
-            { email: user.username, id: user.id }, "importantsecret", { expiresIn: "1h" });
+            { username: user.username, id: user.id, firstname: user.firstname }, "importantsecret", { expiresIn: "1h" });
         res.json(accessToken);
 
     });
 });
 
+router.get("/auth", validateToken, (req, res) => {
+    res.json(req.user);
+});
 
 module.exports = router

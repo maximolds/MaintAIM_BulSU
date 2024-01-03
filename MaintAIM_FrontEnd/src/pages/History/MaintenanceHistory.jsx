@@ -58,6 +58,7 @@ const MaintenanceHistory = () => {
           <ColumnDirective field='part_replaced' headerText='Part Replaced' textAlign='Left' width='100' type='string' />
           <ColumnDirective field='date_replaced' headerText='Date Replaced' textAlign='Left' width='100' type='date' />
           <ColumnDirective field='previous_date_replaced' headerText='Previous Date Replaced' textAlign='Left' width='100' type='date' />
+          <ColumnDirective field='username' headerText='Username' textAlign='Left' width='100' type='string' />
         </ColumnsDirective>
         <Inject services={[Search, Page, Toolbar]} />
 

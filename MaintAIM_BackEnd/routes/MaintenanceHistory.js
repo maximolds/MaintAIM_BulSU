@@ -8,8 +8,10 @@ router.get('/',  async (req, res) => {
     res.json(listOfMaintenanceHistory);
 });
 
-router.post('/',  async (req, res) => {
+router.post('/', validateToken, async (req, res) => {
     const maintenancehistory = req.body;
+    const username = req.user.username;
+    maintenancehistory.username = username;
     await MaintenanceHistory.create(maintenancehistory);
     res.json(maintenancehistory);
 })

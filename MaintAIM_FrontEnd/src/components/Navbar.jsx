@@ -38,15 +38,44 @@ const Navbar = () => {
   const { activeMenu, setActiveMenu,
     isClicked, setIsClicked, handleClick,
     screenSize, setScreenSize, currentColor,
-    showEmailModal, setShowEmailModal, handleOnClose } = useStateContext();
+    showEmailModal, setShowEmailModal, handleOnClose,
+    showUserProfileModal, setShowUserProfileModal } = useStateContext();
 
   const [listUsers, setListOfUsers] = useState([]);
 
+  const [authState, setAuthState] = useState({
+    username: "",
+    id: 0,
+    firstname: "",
+    status: false,
+  });
+
   useEffect(() => {
-    axios.get("http://localhost:3001/auth").then((response) => {
-      setListOfUsers(response.data);
-    });
+    axios
+      .get("http://localhost:3001/auth/auth", {
+        headers: {
+          accessToken: sessionStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState({ ...authState, status: false });
+        } else {
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            firstname: response.data.firstname,
+            status: true,
+          });
+        }
+      });
   }, []);
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({ username: "", id: 0, status: false });
+  };
+
 
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
@@ -106,6 +135,24 @@ const Navbar = () => {
     </TooltipComponent>
   );
 
+  const UserProfileButton = ({ title, customFunc, icon,
+    color, dotColor }) => (
+    <TooltipComponent content={title}
+      position="BottomCenter">
+      <button
+        type="button"
+        onClick={() => setShowUserProfileModal(true)}
+        style={{ color }}
+        className="relative text-xl rounded-full p-3
+        hover:bg-gray-100">
+        <span style={{ background: dotColor }}
+          className="absolute inline-flex 
+          rounded-full h-2 w-2 right-2 top-2"/>
+        {icon}
+
+      </button>
+    </TooltipComponent>
+  );
 
 
 
@@ -144,29 +191,32 @@ const Navbar = () => {
 
         <TooltipComponent content='Profile'
           position="BottomCenter">
-          <div className="flex items-center gap-2
+          <UserProfileButton>
+            <div className="flex items-center gap-2
           cursor-pointer p-1 hover:bg-gray-100 rounded-lg"
-            onClick={() => handleClick('userProfile')}>
-            <img src={avatar}
-              alt="avatar"
-              className="rounded-full w-8 h-8" />
-            <p>
-              <span className="text-gray-400">Hi, </span> {''}
-              {listUsers.filter(user => user.id === 1).map((value, key) => (
-                <span className="text-gray-400
-    font-bold ml-1 text-14">{value.firstname} {value.lastname}</span>
-              ))}
+              onClick={() => handleClick('userProfile')}>
+              <img src={avatar}
+                alt="avatar"
+                className="rounded-full w-8 h-8" />
+              <p>
+                <span className="text-gray-400">Hi, </span> {''}
 
-            </p>
-            <MdKeyboardArrowDown
-              className="text-gray-400 text-14" />
-          </div>
+                <span className="text-gray-400
+    font-bold ml-1 text-14">{authState.firstname}</span>
+
+
+              </p>
+              <MdKeyboardArrowDown
+                className="text-gray-400 text-14" />
+            </div>
+          </UserProfileButton>
+
         </TooltipComponent>
 
         {isClicked.cart && <Cart />}
         <Email onClose={handleOnClose} visble={showEmailModal} />
         {isClicked.notifications && <Notifications />}
-        {isClicked.userProfile && <UserProfile />}
+        <UserProfile onClose={handleOnClose} visble={showUserProfileModal} />
       </div>
 
     </div>
