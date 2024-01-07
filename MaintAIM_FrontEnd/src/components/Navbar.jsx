@@ -54,7 +54,7 @@ const Navbar = () => {
     axios
       .get("http://localhost:3001/auth/auth", {
         headers: {
-          accessToken: sessionStorage.getItem("accessToken"),
+          accessToken: localStorage.getItem("accessToken"),
         },
       })
       .then((response) => {
@@ -135,23 +135,31 @@ const Navbar = () => {
     </TooltipComponent>
   );
 
-  const UserProfileButton = ({ title, customFunc, icon,
-    color, dotColor }) => (
-    <TooltipComponent content={title}
+  const UserProfileButton = () => (
+    <TooltipComponent content='Profile'
       position="BottomCenter">
-      <button
-        type="button"
-        onClick={() => setShowUserProfileModal(true)}
-        style={{ color }}
-        className="relative text-xl rounded-full p-3
-        hover:bg-gray-100">
-        <span style={{ background: dotColor }}
-          className="absolute inline-flex 
-          rounded-full h-2 w-2 right-2 top-2"/>
-        {icon}
 
-      </button>
+      <div className="flex items-center gap-2
+            cursor-pointer p-1 hover:bg-gray-100 rounded-lg"
+        onClick={() => setShowUserProfileModal(true)}>
+        <img src={avatar}
+          alt="avatar"
+          className="rounded-full w-8 h-8" />
+        <p>
+          <span className="text-gray-400">Hi, </span> {''}
+
+          <span className="text-gray-400
+      font-bold ml-1 text-14">{authState.firstname}</span>
+
+
+        </p>
+        <MdKeyboardArrowDown
+          className="text-gray-400 text-14" />
+      </div>
+
+
     </TooltipComponent>
+
   );
 
 
@@ -189,29 +197,7 @@ const Navbar = () => {
           color={currentColor}
           icon={<UserIcon />} />
 
-        <TooltipComponent content='Profile'
-          position="BottomCenter">
-          <UserProfileButton>
-            <div className="flex items-center gap-2
-          cursor-pointer p-1 hover:bg-gray-100 rounded-lg"
-              onClick={() => handleClick('userProfile')}>
-              <img src={avatar}
-                alt="avatar"
-                className="rounded-full w-8 h-8" />
-              <p>
-                <span className="text-gray-400">Hi, </span> {''}
-
-                <span className="text-gray-400
-    font-bold ml-1 text-14">{authState.firstname}</span>
-
-
-              </p>
-              <MdKeyboardArrowDown
-                className="text-gray-400 text-14" />
-            </div>
-          </UserProfileButton>
-
-        </TooltipComponent>
+        <UserProfileButton />
 
         {isClicked.cart && <Cart />}
         <Email onClose={handleOnClose} visble={showEmailModal} />

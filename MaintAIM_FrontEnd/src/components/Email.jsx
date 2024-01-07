@@ -1,10 +1,44 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from "react";
 import { useStateContext } from "../contexts/ContextProvider";
+import axios from "axios";
 import emailjs from "@emailjs/browser";
 
 function Email({ visble, onClose }) {
 
-  const { currentColor } = useStateContext();
+  const { activeMenu, setActiveMenu,
+    isClicked, setIsClicked, handleClick,
+    screenSize, setScreenSize, currentColor,
+    showEmailModal, setShowEmailModal,
+    showUserProfileModal, setShowUserProfileModal } = useStateContext();
+
+    const [authState, setAuthState] = useState({
+      username: "",
+      id: 0,
+      firstname: "",
+      status: false,
+    });
+  
+    useEffect(() => {
+      axios
+        .get("http://localhost:3001/auth/auth", {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
+        })
+        .then((response) => {
+          if (response.data.error) {
+            setAuthState({ ...authState, status: false });
+          } else {
+            setAuthState({
+              username: response.data.username,
+              id: response.data.id,
+              firstname: response.data.firstname,
+              status: true,
+            });
+          }
+        });
+    }, []);
+
 
   const handleOnClose = (e) => {
     if (e.target.id === 'container')
@@ -41,6 +75,12 @@ function Email({ visble, onClose }) {
         </div>
         <form className='m-0 p-0' onSubmit={sendEmail}>
           <div className="flex flex-col">
+          <label
+              type="text"
+              className="m-0 border-t-1 border-gray-700 p-2"
+              id='recepient'
+              name='recepient'
+            >From: <span className="font-bold">{authState.firstname}</span></label>
             <input
               type="text"
               className="border-b-1  border-t-1 border-gray-700 p-2"
@@ -56,7 +96,7 @@ function Email({ visble, onClose }) {
               name='subject'
             />
             <textarea name="message" id="message"
-              className="border-b-1 border-gray-700 pt-4 pl-2 h-[300px]"
+              className="border-b-1 border-gray-700 pt-4 pl-2 h-[250px]"
               placeholder='Message'></textarea>
           </div>
 

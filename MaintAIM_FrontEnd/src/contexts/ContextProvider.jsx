@@ -22,8 +22,11 @@ export const ContextProvider = ({ children }) => {
     const [themeSettings, setThemeSettings] = useState(false);
     const [showEmailModal, setShowEmailModal] = useState(false);
     const [showUserProfileModal, setShowUserProfileModal] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
     
-    const handleOnClose = () => setShowEmailModal(false);
+    const handleOnClose = () => {setShowEmailModal(false), setShowUserProfileModal(false)};
+    
+    const handleOnCloseConfirm = () =>{ setShowLogoutModal(false)}
 
     const setMode = (e) => {
         setCurrentMode(e.target.value);
@@ -69,7 +72,10 @@ export const ContextProvider = ({ children }) => {
                 setShowEmailModal,
                 handleOnClose,
                 showUserProfileModal,
-                setShowUserProfileModal
+                setShowUserProfileModal,
+                showLogoutModal,
+                setShowLogoutModal,
+                handleOnCloseConfirm
 
             }}>
             {children}

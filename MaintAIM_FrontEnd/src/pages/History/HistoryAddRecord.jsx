@@ -34,7 +34,7 @@ const HistoryAddRecord = () => {
         axios.post("http://localhost:3001/maintenancehistory", data,
             {
                 headers: {
-                    accessToken: sessionStorage.getItem("accessToken"),
+                    accessToken: localStorage.getItem("accessToken"),
                 }
             }).then((response) => {
                 if (response.data.error) {
