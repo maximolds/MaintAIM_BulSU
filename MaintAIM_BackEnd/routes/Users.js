@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
         if (!match) return res.json({ error: "Wrong email and password combination" });
 
         const accessToken = sign(
-            { username: user.username, id: user.id, firstname: user.firstname }, "importantsecret", { expiresIn: "1h" });
+            { username: user.username, id: user.id, firstname: user.firstname, role: user.role }, "importantsecret", { expiresIn: "1h" });
         res.json(accessToken);
 
     });

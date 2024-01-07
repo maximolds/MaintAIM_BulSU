@@ -23,6 +23,7 @@ function LogoutConfirm({ visble, onClose }) {
         username: "",
         id: 0,
         firstname: "",
+        role:"",
         status: false,
       });
     
@@ -41,6 +42,7 @@ function LogoutConfirm({ visble, onClose }) {
                 username: response.data.username,
                 id: response.data.id,
                 firstname: response.data.firstname,
+                role: response.data.role,
                 status: true,
               });
             }
@@ -49,7 +51,7 @@ function LogoutConfirm({ visble, onClose }) {
 
     const logout = () => {
         localStorage.removeItem("accessToken");
-        setAuthState({ username: "", id: 0, firstname:"", status: false });
+        setAuthState({ username: "", id: 0, firstname:"", role:"", status: false });
         navigate("/login");
       };
 

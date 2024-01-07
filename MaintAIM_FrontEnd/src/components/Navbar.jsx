@@ -39,7 +39,7 @@ const Navbar = () => {
     isClicked, setIsClicked, handleClick,
     screenSize, setScreenSize, currentColor,
     showEmailModal, setShowEmailModal, handleOnClose,
-    showUserProfileModal, setShowUserProfileModal } = useStateContext();
+    showUserProfileModal, setShowUserProfileModal, role, setRole } = useStateContext();
 
   const [listUsers, setListOfUsers] = useState([]);
 
@@ -48,6 +48,7 @@ const Navbar = () => {
     id: 0,
     firstname: "",
     status: false,
+    role: "",
   });
 
   useEffect(() => {
@@ -65,6 +66,7 @@ const Navbar = () => {
             username: response.data.username,
             id: response.data.id,
             firstname: response.data.firstname,
+            role: response.data.role,
             status: true,
           });
         }
@@ -191,11 +193,14 @@ const Navbar = () => {
           color={currentColor}
           icon={<EmailIcon />} />
 
-        <NavButton
-          title="Notifacations"
-          customFunc={() => handleClick('notifications')}
-          color={currentColor}
-          icon={<UserIcon />} />
+        {authState.role === "Admin" && (
+          <NavButton
+            title="Notifacations"
+            customFunc={() => handleClick('notifications')}
+            color={currentColor}
+            icon={<UserIcon />} />
+        )}
+
 
         <UserProfileButton />
 

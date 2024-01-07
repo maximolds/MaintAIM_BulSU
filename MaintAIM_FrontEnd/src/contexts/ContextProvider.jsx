@@ -23,6 +23,7 @@ export const ContextProvider = ({ children }) => {
     const [showEmailModal, setShowEmailModal] = useState(false);
     const [showUserProfileModal, setShowUserProfileModal] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [role, setRole] = useState("");
     
     const handleOnClose = () => {setShowEmailModal(false), setShowUserProfileModal(false)};
     
@@ -75,7 +76,9 @@ export const ContextProvider = ({ children }) => {
                 setShowUserProfileModal,
                 showLogoutModal,
                 setShowLogoutModal,
-                handleOnCloseConfirm
+                handleOnCloseConfirm,
+                role,
+                setRole
 
             }}>
             {children}
