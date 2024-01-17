@@ -57,7 +57,7 @@ function Registration() {
         data.append('lastname', values.lastname);
         axios.post("http://localhost:3001/auth", data).then(() => {
             console.log(data);
-            navigate("/login");
+            navigate("/");
         });
     };
 
@@ -178,7 +178,8 @@ function Registration() {
                         className="my-4 relative w-80 h-30  bg-main-blue 
                      text-sm ml-200 rounded-lg font-inter shadow-lg 
                      mb-40 hover:bg-white hover:text-black transistion-colors duration-300"
-                        onClick={onSubmit}>Register</button>
+                        onClick={onSubmit}>Register
+                    </button>
                 </form>
 
             </div>

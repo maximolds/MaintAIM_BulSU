@@ -2,7 +2,7 @@ import React from 'react'
 import "../Checklist/MonthlyPM13.css"
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useStateContext } from '../../contexts/ContextProvider';
-
+import './MonthlyPM13.css'
 function MonthlyPM13() {
 
     let navigate = useNavigate();

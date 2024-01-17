@@ -8,7 +8,7 @@ import {
   Dashboard, MaintenanceSchedule, MaintenanceHistory,
   Checklists, Documentation, Audits, Settings,
   UserGuide, Line, HistoryAddRecord, Login, Registration, ChecklistsMenu,
-  DailyCIL, MonthlyPM13, MonthlyPM14, MonthlyPMUH, MonthlyPMUL, Profile
+  DailyCIL, MonthlyPM13, MonthlyPM14, MonthlyPMUH, MonthlyPMUL, Profile, DailyCILUpdate, DailyCILRead
 } from './pages';
 
 import { useStateContext } from './contexts/ContextProvider';
@@ -105,6 +105,11 @@ const App = () => {
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/profile/:id" element={<Profile />} />
                   <Route path="/user-guide" element={<UserGuide />} />
+
+                  {/* Chechlist Actions */}
+
+                  <Route path='/daily/read/:id' element={<DailyCILRead />} />
+                  <Route path='/daily/update/:id' element={<DailyCILUpdate />} />
 
                   {/* Pages outside sidebar (History) */}
 

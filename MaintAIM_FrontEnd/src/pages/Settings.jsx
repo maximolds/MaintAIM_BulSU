@@ -18,6 +18,36 @@ const Settings = () => {
     });
   }, []);
 
+  const [authState, setAuthState] = useState({
+    username: "",
+    id: 0,
+    firstname: "",
+    status: false,
+    role: "",
+  });
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/auth/auth", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState({ ...authState, status: false });
+        } else {
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            firstname: response.data.firstname,
+            role: response.data.role,
+            status: true,
+          });
+        }
+      });
+  }, []);
+
   return (
 
 
@@ -27,15 +57,19 @@ const Settings = () => {
           category="Page"
           title="User Manager"
         />
-        <NavLink
-          to={`/registration`}
-          className={`text-12 font-extrabold opacity-0.9 p-4 hover:bg-white w-97 h-4
-              pt-5 rounded-xl buttonShadow 
-              mt-8 m-4  bg-white flex
-               justify-center border-1 border-fade-blue
-              items-center text-center`}>
-          Add User
-        </NavLink>
+
+        {(authState.role === "Admin" || authState.role === "Staff") && (
+          <NavLink
+            to={`/registration`}
+            className={`text-12 font-extrabold opacity-0.9 p-4 hover:bg-white w-97 h-4
+      pt-5 rounded-xl buttonShadow 
+      mt-8 m-4 bg-white flex
+       justify-center border-1 border-fade-blue
+      items-center text-center`}>
+            Add User
+          </NavLink>
+        )}
+
 
       </div>
 
@@ -45,21 +79,25 @@ const Settings = () => {
 
           {listUsers.map((value, key) => {
             return (
-              <NavLink className="block w-full  flex-wrap m-4 mt-4 pl-10 font-inter text-base text-white bg-main-blue
+              <NavLink className="block w-full rounded-lg flex-wrap m-4 mt-4 pl-10 font-inter text-base text-white bg-main-blue
               border-2 border-b-2 border-black appearnace-none dark:focus:border-blue-500 focus:outline-none 
               focus:ring-0 focus:text-white focus:border-blue-600 peer">
                 <div className='absolute top-2 left-2 z-10 flex items-center pointer-events-none'>
                   <UserIcon />
                 </div>
 
-                <div>
-
+                <div className='flex items-center p-0 m-0'>
                   <div>
-                    <UserIcon />
+                    <div>
+                      <UserIcon />
+                    </div>
                   </div>
-                  <div>{value.username}</div>
-                  <div>{value.email}</div>
-                  <div>{value.role}</div>
+                  <div className='pl-3'>
+                    <div><span className='font-bold text-black'>Username: </span>{value.username}</div>
+                    <div><span className='font-bold text-black'>Email: </span>{value.email}</div>
+                    <div><span className='font-bold text-black'>Role: </span>{value.role}</div>
+                  </div>
+
                 </div>
 
 

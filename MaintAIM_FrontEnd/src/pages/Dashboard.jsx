@@ -124,8 +124,19 @@ const Dashboard = () => {
               {/* <div className={`customShadow  mt-4 mb-4 justify-center items-center w-full`}>*/}
 
 
-
               <div className='customShadow'>
+                <iframe
+                  src="https://calendar.google.com/calendar/embed?height=300&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FManila&showNav=1&title=Asia%20Integrated%20Machine&showPrint=0&showTitle=0&showTz=0&showCalendars=1&showTabs=0&src=YXNpYS5pbnRlZ3JhdGVkLm1hY2hpbmUxM0BnbWFpbC5jb20&src=ZW4ucGhpbGlwcGluZXMjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039BE5&color=%230B8043"
+                  style={{ border: 'solid 1px #777' }}
+                  width="400"
+                  height="300"
+                  frameBorder="0"
+                  scrolling="no"
+                  title="Asia Integrated Schedule"
+                ></iframe>
+              </div>
+
+              {/* <div className='customShadow'>
                 <ScheduleComponent
                   width='400px'
                   height='300px'
@@ -137,21 +148,19 @@ const Dashboard = () => {
                   <Inject services={[Day, Week, WorkWeek,
                     Month, Agenda, Resize, DragAndDrop]} />
                 </ScheduleComponent>
-              </div>
+              </div>*/}
+
 
               <div className='mt-3 customShadow'>
-                <ScheduleComponent
-                  width='400px'
-                  height='200px'
-                  currentView='Agenda'
-                  eventSettings={{ dataSource: scheduleData }}
-                  selectedDate={new Date(2021, 0, 10)}
-                  showHeaderBar={false}
-
-                >
-                  <Inject services={[Day, Week, WorkWeek,
-                    Month, Agenda, Resize, DragAndDrop]} />
-                </ScheduleComponent>
+                <iframe
+                  src="https://calendar.google.com/calendar/embed?height=200&wkst=1&bgcolor=%23ffffff&ctz=Asia%2FManila&showNav=1&title=MaintAIM%20Agenda&showPrint=0&showTitle=1&showTz=0&showCalendars=1&showTabs=0&mode=AGENDA&src=YXNpYS5pbnRlZ3JhdGVkLm1hY2hpbmUxM0BnbWFpbC5jb20&src=ZW4ucGhpbGlwcGluZXMjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039BE5&color=%230B8043"
+                  style={{ border: 'solid 1px #777' }}
+                  width="400"
+                  height="200"
+                  frameBorder="0"
+                  scrolling="no"
+                  title="Asia Integrated Schedule"
+                ></iframe>
 
               </div>
 

@@ -10,11 +10,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         StartTime:{
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         EndTime:{
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        CategoryColor:{
+            type: DataTypes.STRING,
             allowNull: false,
         }
        

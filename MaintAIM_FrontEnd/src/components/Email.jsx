@@ -11,33 +11,33 @@ function Email({ visble, onClose }) {
     showEmailModal, setShowEmailModal,
     showUserProfileModal, setShowUserProfileModal } = useStateContext();
 
-    const [authState, setAuthState] = useState({
-      username: "",
-      id: 0,
-      firstname: "",
-      status: false,
-    });
-  
-    useEffect(() => {
-      axios
-        .get("http://localhost:3001/auth/auth", {
-          headers: {
-            accessToken: localStorage.getItem("accessToken"),
-          },
-        })
-        .then((response) => {
-          if (response.data.error) {
-            setAuthState({ ...authState, status: false });
-          } else {
-            setAuthState({
-              username: response.data.username,
-              id: response.data.id,
-              firstname: response.data.firstname,
-              status: true,
-            });
-          }
-        });
-    }, []);
+  const [authState, setAuthState] = useState({
+    username: "",
+    id: 0,
+    firstname: "",
+    status: false,
+  });
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/auth/auth", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState({ ...authState, status: false });
+        } else {
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            firstname: response.data.firstname,
+            status: true,
+          });
+        }
+      });
+  }, []);
 
 
   const handleOnClose = (e) => {
@@ -49,7 +49,8 @@ function Email({ visble, onClose }) {
     e.preventDefault();
     alert("submitted");
 
-    emailjs.sendForm('service_taeadrd', 'template_id', e.target, 'public_key')
+    emailjs.sendForm('service_taeadrd', 'template_2crru87', e.target, 'x7KKbPBTsDAa0XmoP')
+
   }
 
   if (!visble) return null;
@@ -71,18 +72,22 @@ function Email({ visble, onClose }) {
           </button>
         </div>
         <div>
-          
+
         </div>
         <form className='m-0 p-0' onSubmit={sendEmail}>
           <div className="flex flex-col">
-          <label
-              type="text"
-              className="m-0 border-t-1 border-gray-700 p-2"
-              id='recepient'
-              name='recepient'
-            >From: <span className="font-bold">{authState.firstname}</span></label>
+            <div className="m-0 p-0 flex ">
+              <label htmlFor="from_name" className="font-bold mr-2 pl-3">From:</label>
+              <input
+                type="text"
+                className="m-0  border-gray-700 p-2"
+                name="from_name"
+                id="from_name"
+                value={authState.firstname}
+              />
+            </div>
             <input
-              type="text"
+              type="email"
               className="border-b-1  border-t-1 border-gray-700 p-2"
               placeholder="Recepients"
               id='recepient'
@@ -95,7 +100,9 @@ function Email({ visble, onClose }) {
               id='subject'
               name='subject'
             />
-            <textarea name="message" id="message"
+            <textarea
+              name="message"
+              id="message"
               className="border-b-1 border-gray-700 pt-4 pl-2 h-[250px]"
               placeholder='Message'></textarea>
           </div>
@@ -106,7 +113,7 @@ function Email({ visble, onClose }) {
               text-white hover:text-black flex justify-center border-1 border-fade-blue
               items-center text-center" style={{ backgroundColor: currentColor }}
               type='submit'
-              >
+            >
               Send
             </button>
           </div>

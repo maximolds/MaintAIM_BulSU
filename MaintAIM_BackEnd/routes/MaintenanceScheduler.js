@@ -7,21 +7,24 @@ router.get('/', async (req, res) => {
     res.json(listOfMaintenanceScheduler);
 });
 
-router.post('/', async (req, res) => {
+router.post('/insert', async (req, res) => {
     const maintenancescheduler = req.body;
     await MaintenanceScheduler.create(maintenancescheduler);
     res.json(maintenancescheduler);
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/delete', async (req, res) => {
     const maintenancescheduler = req.body;
     await MaintenanceScheduler.delete(maintenancescheduler);
     res.json(maintenancescheduler);
 });
 
-router.put('/', async (req, res) => {
+router.put('/update', async (req, res) => {
     const { body: { maintenancescheduler } } = req;
-    await MaintenanceScheduler.update(maintenancescheduler);
+    const id = req.params.id;
+
+    await MaintenanceScheduler.update(maintenancescheduler,
+        { where: { id: id } });
     res.json(maintenancescheduler);
 });
 

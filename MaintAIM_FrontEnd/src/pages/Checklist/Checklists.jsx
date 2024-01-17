@@ -8,22 +8,93 @@ import { employeesData, maintenanceHistoryGrid } from '../../data/dummy';
 import { Header } from '../../components';
 import axios from "axios";
 import { Link, NavLink } from "react-router-dom";
+import DataTable from 'react-data-table-component';
 
 const Checklists = () => {
 
-  const toolbarOptions = ['Search'];
+  const [isClicked, setIsClicked] = useState(false);
 
-  const [listOfMaintenanceHistory, setListOfMaintenanceHistory] = useState([]);
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  };
+
+  const columns = [
+    {
+      name: 'ID',
+      selector: row => row.id,
+      sortable: true,
+    },
+    {
+      name: 'Crane Number',
+      selector: row => row.Daily_CIL_Crane_Number,
+      sortable: true,
+    },
+    {
+      name: 'Insepecte by',
+      selector: row => row.Daily_CIL_inspected_by,
+      sortable: true,
+    },
+    {
+      name: 'Approved by',
+      selector: row => row.Daily_CIL_approved_by,
+      sortable: true,
+    },
+    {
+      name: 'Date',
+      selector: row => row.Daily_CIL_date,
+      sortable: true,
+    },
+    {
+      name: 'Action',
+      cell: row => (
+        <div className="flex justify-center items-center">
+          <Link
+            className={`w-10 h-5 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            to={`/daily/update/${row.id}`}
+          >
+            Edit
+          </Link>
+          <Link
+            className={`m-2 w-10 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            to={`/daily/read/${row.id}`}
+          >
+            Read
+          </Link>
+        </div>
+      ),
+    },
+  ];
+
+
+
+
+  const [search, setSearch] = useState("")
+  const [listOfDailyCheckList, setListOfDailyCheckList] = useState([]);
+  const [filteredPersonnel, setFilteredPersonnel] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/maintenancehistory").then((response) => {
-      setListOfMaintenanceHistory(response.data);
+    axios.get("http://localhost:3001/dailychecklist").then((response) => {
+      setListOfDailyCheckList(response.data);
+      setFilteredPersonnel(response.data)
     });
   }, []);
+
+  useEffect(()=>{
+    const result = listOfDailyCheckList.filter(person =>{
+      return person.Daily_CIL_inspected_by.toLowerCase().match(search.toLowerCase());
+    })
+
+    setFilteredPersonnel(result)
+  }, [search])
+
+
 
 
 
   return (
+
+
+
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <div className='justify-between flex'>
         <Header
@@ -42,27 +113,32 @@ const Checklists = () => {
 
       </div>
 
+      <DataTable
+        columns={columns}
+        data={filteredPersonnel}
+        selectableRows
+        fixedHeader
+        fixedHeaderScrollHeight='400px'
+        pagination
+        title="Daily Checklist"
+        actions={<button className={`w-20 h-5 text-12 bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
+          Export</button>}
+        subHeader
+        subHeaderComponent={
+          <input
+            className='w-5'
+            type='text'
+            placeholder='Search Here'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          ></input>
+        }
+      />
 
-      <GridComponent
-        dataSource={listOfMaintenanceHistory}
-        width="auto"
-        allowPaging
-        allowSorting
-        pageSettings={{ pageCount: 5 }}
 
-        toolbar={toolbarOptions}
-      >
-        <ColumnsDirective>
-          <ColumnDirective field='crane_number' headerText='Crane Number' textAlign='Left' width='100' />
-          <ColumnDirective field='personnel_incharge' headerText='Personnel Incharge' textAlign='Left' width='100' />
-          <ColumnDirective field='part_replaced' headerText='Part Replaced' textAlign='Left' width='100' />
-          <ColumnDirective field='date_replaced' headerText='Date Replaced' textAlign='Left' width='100' />
-          <ColumnDirective field='previous_date_replaced' headerText='Previous Date Replaced' textAlign='Left' width='100' />
-        </ColumnsDirective>
-        <Inject services={[Search, Page, Toolbar]} />
-
-      </GridComponent>
     </div>
+
+
   );
 };
 export default Checklists;
