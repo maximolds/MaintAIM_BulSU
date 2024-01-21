@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   GridComponent, Inject, ColumnsDirective,
   ColumnDirective, Search, Page, Toolbar, ExcelExport
@@ -9,6 +9,7 @@ import { Header } from '../../components';
 import axios from "axios";
 import { Link, NavLink } from "react-router-dom";
 import DataTable from 'react-data-table-component';
+import { useReactToPrint } from 'react-to-print'
 
 const Checklists = () => {
 
@@ -71,6 +72,7 @@ const Checklists = () => {
   const [search, setSearch] = useState("")
   const [listOfDailyCheckList, setListOfDailyCheckList] = useState([]);
   const [filteredPersonnel, setFilteredPersonnel] = useState([]);
+  const dailyPdf = useRef();
 
   useEffect(() => {
     axios.get("http://localhost:3001/dailychecklist").then((response) => {
@@ -79,15 +81,19 @@ const Checklists = () => {
     });
   }, []);
 
-  useEffect(()=>{
-    const result = listOfDailyCheckList.filter(person =>{
+  useEffect(() => {
+    const result = listOfDailyCheckList.filter(person => {
       return person.Daily_CIL_inspected_by.toLowerCase().match(search.toLowerCase());
     })
 
     setFilteredPersonnel(result)
   }, [search])
 
-
+  const generateDailyPDF = useReactToPrint({
+    content: () => dailyPdf.current,
+    documentTitle: `Daily CIL`,
+    onAfterPrint: () => alert("Data saved in PDF")
+  });
 
 
 
@@ -96,6 +102,7 @@ const Checklists = () => {
 
 
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
+
       <div className='justify-between flex'>
         <Header
           category="Page"
@@ -112,28 +119,60 @@ const Checklists = () => {
         </NavLink>
 
       </div>
+      <div ref={dailyPdf} style={{ width: '100%' }}>
+        <DataTable
+          columns={columns}
+          data={filteredPersonnel}
+          selectableRows
+          fixedHeader
+          fixedHeaderScrollHeight='400px'
+          pagination
+          title="Daily Checklist"
+          actions={<button
+            onClick={generateDailyPDF}
+            className={`w-20 h-5 text-12 bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
+            Export</button>}
+          subHeader
+          subHeaderComponent={
+            <input
+              className='w-5'
+              type='text'
+              placeholder='Search Here'
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            ></input>
+          }
+        />
+      </div>
 
-      <DataTable
-        columns={columns}
-        data={filteredPersonnel}
-        selectableRows
-        fixedHeader
-        fixedHeaderScrollHeight='400px'
-        pagination
-        title="Daily Checklist"
-        actions={<button className={`w-20 h-5 text-12 bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
-          Export</button>}
-        subHeader
-        subHeaderComponent={
-          <input
-            className='w-5'
-            type='text'
-            placeholder='Search Here'
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          ></input>
-        }
-      />
+      <div className='mt-4' ref={dailyPdf} style={{ width: '100%' }}>
+        <DataTable
+          columns={columns}
+          data={filteredPersonnel}
+          selectableRows
+          fixedHeader
+          fixedHeaderScrollHeight='400px'
+          pagination
+          title="UH Crane 1 & 2"
+          actions={<button
+            onClick={generateDailyPDF}
+            className={`w-20 h-5 text-12 bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
+            Export</button>}
+          subHeader
+          subHeaderComponent={
+            <input
+              className='w-5'
+              type='text'
+              placeholder='Search Here'
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            ></input>
+          }
+        />
+      </div>
+
+
+
 
 
     </div>

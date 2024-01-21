@@ -358,7 +358,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         DAILY_CIL_REMARKS:{
-            type: DataTypes.STRING(3),
+            type: DataTypes.TEXT,
             allowNull: false,
         },
 

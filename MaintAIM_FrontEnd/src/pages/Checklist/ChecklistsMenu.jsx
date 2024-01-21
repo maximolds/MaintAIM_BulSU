@@ -1,10 +1,26 @@
 import React from 'react';
 import '../Checklist/ChecklistsMenu.css'
 import { Link, NavLink } from "react-router-dom";
+import { useStateContext } from '../../contexts/ContextProvider';
 
 const ChecklistsMenu = () => {
+
+  const { currentColor, activeMenu, setActiveMenu } = useStateContext();
+  
   return (
+
     <div className=' flex flex-wrap justify-center items-center mt-10'>
+      <Link
+        to={`/checklists`}
+        //onClick={()=>navigate(-1)}
+        className={`text-12 font-extrabold opacity-0.9 p-4 hover:bg-white w-80 h-2
+               rounded-xl buttonShadow mt-4 mr-2  
+              bg-white hover:text-black flex justify-center border-1 border-fade-blue
+              items-center text-center`}
+        style={{ color: currentColor }}
+      >
+        Back
+      </Link>
       <div className="section">
         <h3 className='font-bold text-xl mt-12'>DAILY CIL</h3>
         <h5>FOR ALL CRANES</h5>

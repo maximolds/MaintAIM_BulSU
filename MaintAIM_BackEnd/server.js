@@ -37,6 +37,18 @@ app.use("/auth",  usersRouter);
 const dailyDailyCheckListRouter = require('./routes/DailyCheckList');
 app.use('/dailychecklist', dailyDailyCheckListRouter)
 
+const uhCheckListRouter = require('./routes/UHCheckList');
+app.use('/uhchecklist', uhCheckListRouter)
+
+const ulCheckListRouter = require('./routes/ULCheckList');
+app.use('/ulchecklist', ulCheckListRouter)
+
+const crane13CheckListRouter = require('./routes/Crane13CheckList');
+app.use('/crane13checklist', crane13CheckListRouter)
+
+const crane14CheckListRouter = require('./routes/Crane14CheckList');
+app.use('/crane14checklist', crane14CheckListRouter)
+
 db.sequelize.sync().then(() => {
     app.listen(3001, () => {
         console.log(`Server is running on port 3001`)

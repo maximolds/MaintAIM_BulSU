@@ -122,24 +122,6 @@ function DailyCIL() {
   };
 
 
-  {/*const onSubmit = (e) => {
-  e.preventDefault();
-
-  const data = new FormData();
-  data.append('picture', file)
-  data.append('picture', values.picture);
-  data.append('username', values.username);
-  data.append('email', values.email);
-  data.append('password', values.password);
-  data.append('role', values.role);
-  data.append('firstname', values.firstname);
-  data.append('lastname', values.lastname);
-  axios.post("http://localhost:3001/auth", data).then(() => {
-      console.log(data);
-      navigate("/");
-  });
-}; */}
-
 
   return (
     <div>
@@ -546,7 +528,8 @@ function DailyCIL() {
 
             <tbody><tr>
               <td colspan="2">
-                <textarea className='border-black border w-[100%]' id="DAILY_CIL_REMARKS" name="DAILY_CIL_REMARKS" rows="6" cols="50"></textarea>
+                
+                <Field as="textarea" className='border-black border w-[100%]'  id="DAILY_CIL_REMARKS" name="DAILY_CIL_REMARKS" rows="6" cols="50"></Field>
               </td>
             </tr>
               <tr>
