@@ -4,7 +4,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { BsChatLeft } from "react-icons/bs";
 import { RiNotification2Line } from "react-icons/ri";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+import { Tooltip } from 'react-tooltip';
 import avatar from '../data/avatar.jpg';
 import { Cart, Email, Notifications, UserProfile } from '.';
 import { useStateContext } from "../contexts/ContextProvider";
@@ -13,23 +13,30 @@ import { EmailIcon } from "../assets/icons/EmailIcon";
 import axios from "axios";
 
 
-const NavButton = ({ title, customFunc, icon,
+const MenuButton = ({ title, customFunc, icon,
   color, dotColor }) => (
-  <TooltipComponent content={title}
-    position="BottomCenter">
-    <button
-      type="button"
-      onClick={customFunc}
-      style={{ color }}
-      className="relative text-xl rounded-full p-3
+  <div>
+    <a id="menu">
+      <button
+        type="button"
+        onClick={customFunc}
+        style={{ color }}
+        className="relative text-xl rounded-full p-3
       hover:bg-gray-100">
-      <span style={{ background: dotColor }}
-        className="absolute inline-flex 
+        <span style={{ background: dotColor }}
+          className="absolute inline-flex 
         rounded-full h-2 w-2 right-2 top-2"/>
-      {icon}
+        {icon}
 
-    </button>
-  </TooltipComponent>
+      </button>
+    </a>
+    <Tooltip
+        anchorSelect="#menu"
+        content="Menu"
+        place="bottom"
+      />
+  </div>
+
 );
 
 
@@ -120,59 +127,78 @@ const Navbar = () => {
 
   const EmailButton = ({ title, customFunc, icon,
     color, dotColor }) => (
-    <TooltipComponent content={title}
-      position="BottomCenter">
-      <button
-        type="button"
-        onClick={() => setShowEmailModal(true)}
-        style={{ color }}
-        className="relative text-xl rounded-full p-3
+    <div>
+      <a id="email">
+        <button
+          type="button"
+          onClick={() => setShowEmailModal(true)}
+          style={{ color }}
+          className="relative text-xl rounded-full p-3
         hover:bg-gray-100">
-        <span style={{ background: dotColor }}
-          className="absolute inline-flex 
+          <span style={{ background: dotColor }}
+            className="absolute inline-flex 
           rounded-full h-2 w-2 right-2 top-2"/>
-        {icon}
+          {icon}
 
-      </button>
-    </TooltipComponent>
+        </button>
+      </a>
+      <Tooltip
+        anchorSelect="#email"
+        content="Email"
+        place="bottom"
+      />
+    </div>
+
   );
 
   const UserProfileButton = () => (
-    <TooltipComponent content='Profile'
-      position="BottomCenter">
+    <div>
+      <a id="profile">
 
-      <div className="flex items-center gap-2
+        <div className="flex items-center gap-2
             cursor-pointer p-1 hover:bg-gray-100 rounded-lg"
-        onClick={() => setShowUserProfileModal(true)}>
-        <img src={avatar}
-          alt="avatar"
-          className="rounded-full w-8 h-8" />
-        <p>
-          <span className="text-gray-400">Hi, </span> {''}
+          onClick={() => setShowUserProfileModal(true)}>
+          <img src={avatar}
+            alt="avatar"
+            className="rounded-full w-8 h-8" />
+          <p>
+            <span className="text-gray-400">Hi, </span> {''}
 
-          <span className="text-gray-400
+            <span className="text-gray-400
       font-bold ml-1 text-14">{authState.firstname}</span>
 
 
-        </p>
-        <MdKeyboardArrowDown
-          className="text-gray-400 text-14" />
-      </div>
+          </p>
+          <MdKeyboardArrowDown
+            className="text-gray-400 text-14" />
+
+        </div>
+      </a>
+      <Tooltip
+        anchorSelect="#profile"
+        content="Profile"
+        place="bottom"
+      />
+    </div>
 
 
-    </TooltipComponent>
 
   );
+
+  <Tooltip
+    anchorSelect="#my-anchor-element"
+    content="Hello world!"
+  />
 
 
 
   return (
 
     <div className="flex justify-between relative
-    p-2 md:mx-6 mt-20 transition-all duration-300"
+    p-2 md:mx-6 mt-4 transition-all duration-300"
       id="elementid">
       {/* change mt-20 after defense*/}
-      <NavButton
+      <MenuButton
         title="Menu"
         customFunc={() => setActiveMenu(
           (prevActiveMenu) => !prevActiveMenu)}
@@ -181,25 +207,17 @@ const Navbar = () => {
       />
 
       <div className="flex">
-        <NavButton
-          title="Cart"
-          customFunc={() => handleClick('cart')}
-          color={currentColor}
-          icon={<UserIcon />} />
-
-        <EmailButton
-          title="Email"
-          dotColor='#03C9D7'
-          color={currentColor}
-          icon={<EmailIcon />} />
+      
 
         {authState.role === "Admin" && (
-          <NavButton
-            title="Notifacations"
-            customFunc={() => handleClick('notifications')}
+          <EmailButton
+            title="Email"
+            dotColor='#03C9D7'
             color={currentColor}
-            icon={<UserIcon />} />
+            icon={<EmailIcon />} />
         )}
+
+    
 
 
         <UserProfileButton />

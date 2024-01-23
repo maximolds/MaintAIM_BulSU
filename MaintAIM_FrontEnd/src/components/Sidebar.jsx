@@ -2,11 +2,11 @@ import React from 'react';
 import { Link, NavLink } from "react-router-dom";
 import { SiShopware } from 'react-icons/si';
 import { MdOutlineCancel } from 'react-icons/md';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { Tooltip } from 'react-tooltip';
 
 import { links } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
-import {ShowComponents} from '../components'
+import { ShowComponents } from '../components'
 
 const Sidebar = () => {
   const { activeMenu, setActiveMenu,
@@ -27,24 +27,28 @@ const Sidebar = () => {
     overflow-auto md:over:overflow-auto
     pb-10'>
       {activeMenu && (<>
- {/* change mt-20 after defense*/}
+        {/* change mt-20 after defense*/}
         <div className='flex justify-between items-center'>
           <Link to="/" onClick={handleCloseSideBar}
-            className='items-center gap-3 ml-3 mt-20 flex 
+            className='items-center gap-3 ml-3 mt-4 flex 
           text-xl font-extrabold tracking-tight
           dark:text-white text-slate-900'>
             <SiShopware /> <span>MaintAIM</span>
           </Link>
 
-          <TooltipComponent content="Menu"
-            position='BottomCenter'>
+          <a id="menu">
             <button type='button'
               onClick={() => setActiveMenu((prevActiveMenu) => !prevActiveMenu)}
               className='text-xl rounded-full p-3 hover:bg-light-gray
              mt-4 block md:hidden'>
               <MdOutlineCancel />
             </button>
-          </TooltipComponent>
+          </a>
+          <Tooltip
+            anchorSelect="#menu"
+            content="Menu"
+            place="bottom"
+          />
         </div>
         <div className='mt-10'>
           {links.map((item) => (

@@ -19,6 +19,14 @@ export { default as RightSide } from './DashboardComponents/RightSide';
 export { default as HistoryAddRecord } from './History/HistoryAddRecord';
 export { default as Login } from './Login';
 export { default as Registration } from './Registration';
-export { default as Profile} from './Profile';
-export {default as DailyCILUpdate} from './ChecklistActions/DailyCILUpdate'
-export {default as DailyCILRead} from './ChecklistActions/DailyCILRead'
+export { default as Profile } from './Profile';
+export { default as DailyCILUpdate } from './ChecklistActions/DailyCILUpdate'
+export { default as DailyCILRead } from './ChecklistActions/DailyCILRead'
+export { default as MonthlyPM13Update } from './ChecklistActions/MonthlyPM13Update'
+export { default as MonthlyPM13Read } from './ChecklistActions/MonthlyPM13Read'
+export { default as MonthlyPM14Update } from './ChecklistActions/MonthlyPM14Update'
+export { default as MonthlyPM14Read } from './ChecklistActions/MonthlyPM14Read'
+export { default as MonthlyPMUHUpdate } from './ChecklistActions/MonthlyPMUHUpdate'
+export { default as MonthlyPMULUpdate } from './ChecklistActions/MonthlyPMULUpdate'
+export { default as MonthlyPMULRead } from './ChecklistActions/MonthlyPMULRead'
+export { default as MonthlyPMUHRead } from './ChecklistActions/MonthlyPMUHRead'

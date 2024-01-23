@@ -17,7 +17,8 @@ const HistoryAddRecord = () => {
         crane_number: "",
         part_replaced: "",
         date_replaced: "",
-        previous_date_replaced: ""
+        previous_date_replaced: "",
+        status: ""
     };
 
     const validationSchema = Yup.object().shape({
@@ -158,6 +159,18 @@ const HistoryAddRecord = () => {
                                             name="previous_date_replaced"
                                             type="date"
                                             placeholder='Insert Date Here'
+                                            className='rounded-3xl w-318 h-42 border-2 border-fade-blue  pl-4'
+                                        />
+                                    </div>
+                                    <div className='mt-5'>
+                                        <p className='text-sm text-black dark:text-white mb-3 font-bold'>
+                                           Status
+                                        </p>
+                                        <ErrorMessage name="status" component="span" />
+                                        <Field
+                                            name="status"
+                                            type="string"
+                                            placeholder='Insert Current Status'
                                             className='rounded-3xl w-318 h-42 border-2 border-fade-blue  pl-4'
                                         />
                                     </div>

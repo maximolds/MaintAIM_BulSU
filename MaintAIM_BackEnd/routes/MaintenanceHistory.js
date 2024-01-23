@@ -22,5 +22,12 @@ router.post('/', validateToken, async (req, res) => {
     res.json(maintenancehistory);
 })
 
+router.put("/update/byId/:id", async (req, res) => {
+    const { id } = req.params;
+    const listOfMaintenanceHistory = await MaintenanceHistory.update(req.body, { where: { id: id } })
+    res.json(listOfMaintenanceHistory)
+
+});
+
 
 module.exports = router

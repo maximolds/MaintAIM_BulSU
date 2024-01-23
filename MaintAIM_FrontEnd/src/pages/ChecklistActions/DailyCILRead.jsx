@@ -60,7 +60,7 @@ function DailyCILRead() {
                rounded-xl buttonShadow mt-4  ml-2
               text-white hover:text-black flex justify-center border-1 border-fade-blue
               items-center text-center bg-red-700`}
-                   
+
                 >
                     Export as PDF
                 </button>

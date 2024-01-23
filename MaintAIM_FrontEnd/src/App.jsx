@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
-import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+import { Tooltip } from 'react-tooltip'
 
 import { Navbar, Footer, Sidebar, ThemeSettings, ShowComponents } from './components';
 import {
   Dashboard, MaintenanceSchedule, MaintenanceHistory,
   Checklists, Documentation, Audits, Settings,
   UserGuide, Line, HistoryAddRecord, Login, Registration, ChecklistsMenu,
-  DailyCIL, MonthlyPM13, MonthlyPM14, MonthlyPMUH, MonthlyPMUL, Profile, DailyCILUpdate, DailyCILRead
+  DailyCIL, MonthlyPM13, MonthlyPM14, MonthlyPMUH, MonthlyPMUL, Profile, DailyCILUpdate, DailyCILRead, MonthlyPM13Update, MonthlyPM13Read, MonthlyPM14Update, MonthlyPM14Read, MonthlyPMUHUpdate, MonthlyPMULUpdate, MonthlyPMULRead, MonthlyPMUHRead
 } from './pages';
 
 import { useStateContext } from './contexts/ContextProvider';
@@ -16,6 +16,7 @@ import ProtectedRoutes from '../utils/ProtectedRoutes';
 
 
 import './App.css'
+
 
 
 
@@ -33,7 +34,7 @@ const App = () => {
         <div className='flex relative dark:bg-main-dark-bg'>
           <div className='fixed right-4 bottom-4' style={{ zIndex: '1000' }}>
             <ShowComponents>
-              <TooltipComponent content="Settings" position="Top">
+              <a id="settings">
                 <button type='button'
                   className='text-3xl p-3 hover:drop-shadow-xl
               hover:bg-light-gray text-white'
@@ -41,8 +42,14 @@ const App = () => {
                   style={{ background: currentColor, borderRadius: '50%' }}>
                   <FiSettings />
                 </button>
-              </TooltipComponent>
+              </a>
+              <Tooltip
+                anchorSelect="#settings"
+                content="Settings"
+              />
             </ShowComponents>
+
+
 
           </div>
           {/* Sidebar */}
@@ -110,7 +117,14 @@ const App = () => {
 
                   <Route path='/daily/read/:id' element={<DailyCILRead />} />
                   <Route path='/daily/update/:id' element={<DailyCILUpdate />} />
-
+                  <Route path='/crane13/update/:id' element={<MonthlyPM13Update />} />
+                  <Route path='/crane13/read/:id' element={<MonthlyPM13Read />} />
+                  <Route path='/crane14/update/:id' element={<MonthlyPM14Update />} />
+                  <Route path='/crane14/read/:id' element={<MonthlyPM14Read />} />
+                  <Route path='/pmuh/update/:id' element={<MonthlyPMUHUpdate />} />
+                  <Route path='/pmuh/read/:id' element={<MonthlyPMUHRead />} />
+                  <Route path='/pmul/update/:id' element={<MonthlyPMULUpdate />} />
+                  <Route path='/pmul/read/:id' element={<MonthlyPMULRead />} />
                   {/* Pages outside sidebar (History) */}
 
                   <Route path="/history-add-record" element={<HistoryAddRecord />} />

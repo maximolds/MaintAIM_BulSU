@@ -1,27 +1,93 @@
-import React, { useEffect, useState } from 'react';
-import {
-  GridComponent, Inject, ColumnsDirective,
-  ColumnDirective, Search, Page, Toolbar
-} from '@syncfusion/ej2-react-grids';
-
-import { employeesData, maintenanceHistoryGrid } from '../../data/dummy';
+import React, { useEffect, useState, useRef } from 'react';
 import { Header } from '../../components';
-
-import { Link, NavLink } from "react-router-dom";
-
 import axios from "axios";
+import { Link, NavLink } from "react-router-dom";
+import DataTable from 'react-data-table-component';
+import { useReactToPrint } from 'react-to-print'
 
 const MaintenanceHistory = () => {
 
-  const toolbarOptions = ['Search'];
+  
+  const [isClicked, setIsClicked] = useState(false);
 
+  const historycolumns = [
+    {
+      name: 'ID',
+      selector: row => row.id,
+      sortable: true,
+    },
+    {
+      name: 'Crane Number',
+      selector: row => row.crane_number,
+      sortable: true,
+    },
+    {
+      name: 'Personnel Incharge',
+      selector: row => row.personnel_incharge,
+      sortable: true,
+    },
+    {
+      name: 'Part Replaced',
+      selector: row => row.part_replaced,
+      sortable: true,
+    },
+    {
+      name: 'Date Replaced',
+      selector: row => row.date_replaced,
+      sortable: true,
+    },
+    {
+      name: 'Status',
+      selector: row => row.status,
+      sortable: true,
+    },
+    {
+      name: 'Action',
+      cell: row => (
+        <div className="flex justify-center items-center">
+          <Link
+            className={`w-10 h-5 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            to={`/daily/update/${row.id}`}
+          >
+            Edit
+          </Link>
+          <Link
+            className={`m-2 w-10 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            to={`/daily/read/${row.id}`}
+          >
+            Read
+          </Link>
+        </div>
+      ),
+    },
+  ];
+
+  const [search, setSearch] = useState("")
   const [listOfMaintenanceHistory, setListOfMaintenanceHistory] = useState([]);
+  const [filteredPersonnel, setFilteredPersonnel] = useState([]);
+  const historyPdf = useRef();
 
   useEffect(() => {
     axios.get("http://localhost:3001/maintenancehistory").then((response) => {
       setListOfMaintenanceHistory(response.data);
+      setFilteredPersonnel(response.data);
     });
   }, []);
+
+  useEffect(() => {
+    const result = listOfMaintenanceHistory.filter(person => {
+      return person.personnel_incharge.toLowerCase().match(search.toLowerCase());
+    })
+
+    setFilteredPersonnel(result)
+  }, [search])
+
+  const generateHistoryPDF = useReactToPrint({
+    content: () => dailyPdf.current,
+    documentTitle: `Maintenance History`,
+    onAfterPrint: () => alert("Data saved in PDF")
+  });
+
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
@@ -43,26 +109,31 @@ const MaintenanceHistory = () => {
       </div>
 
 
-      <GridComponent
-        dataSource={listOfMaintenanceHistory}
-        width="auto"
-        allowPaging
-        allowSorting
-        pageSettings={{ pageCount: 5 }}
-
-        toolbar={toolbarOptions}
-      >
-        <ColumnsDirective>
-          <ColumnDirective field='crane_number' headerText='Crane Number'  textAlign='Left' width='100' type='number' />
-          <ColumnDirective field='personnel_incharge' headerText='Personnel Incharge' textAlign='Left' width='100' type='string' />
-          <ColumnDirective field='part_replaced' headerText='Part Replaced' textAlign='Left' width='100' type='string' />
-          <ColumnDirective field='date_replaced' headerText='Date Replaced' textAlign='Left' width='100' type='date' />
-          <ColumnDirective field='previous_date_replaced' headerText='Previous Date Replaced' textAlign='Left' width='100' type='date' />
-          <ColumnDirective field='username' headerText='Username' textAlign='Left' width='100' type='string' />
-        </ColumnsDirective>
-        <Inject services={[Search, Page, Toolbar]} />
-
-      </GridComponent>
+      <div ref={historyPdf} style={{ width: '100%' }}>
+        <DataTable
+          columns={historycolumns}
+          data={filteredPersonnel}
+          selectableRows
+          fixedHeader
+          fixedHeaderScrollHeight='400px'
+          pagination
+          title="Daily Checklist"
+          actions={<button
+            onClick={generateHistoryPDF}
+            className={`w-20 h-5 text-12 bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
+            Export</button>}
+          subHeader
+          subHeaderComponent={
+            <input
+              className='w-5'
+              type='text'
+              placeholder='Search Here'
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            ></input>
+          }
+        />
+      </div>
     </div>
   );
 };
