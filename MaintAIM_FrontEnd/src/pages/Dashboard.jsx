@@ -4,23 +4,10 @@ import { EmailIcon } from '../assets/icons/EmailIcon';
 
 import { Link, NavLink } from "react-router-dom";
 import { links } from '../data/dummy';
-
 import { BsCurrencyDollar } from 'react-icons/bs';
 import { LineChart, Button, SparkLine, Stacked } from '../components';
 import { SparklineAreaData, cardsData } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
-import {
-  ScheduleComponent, ViewsDirective, ViewDirective,
-  Day, Week, WorkWeek, Month, Agenda, Inject, Resize,
-  DragAndDrop,
-} from '@syncfusion/ej2-react-schedule';
-
-import {
-  KanbanComponent, ColumnsDirective,
-  ColumnDirective
-} from '@syncfusion/ej2-react-kanban';
-
-
 import {
   scheduleData, kanbanData,
   kanbanGrid
@@ -42,7 +29,7 @@ const Dashboard = () => {
   return (
     <div className='flex'>
       <div className=''>
-        <div className='mt-12'>
+        <div className='mt-5'>
           <div className='flex flex-wrap lg:flex-nowrap 
       justify-center '>
             <div className='bg-white dark:text-gray-200

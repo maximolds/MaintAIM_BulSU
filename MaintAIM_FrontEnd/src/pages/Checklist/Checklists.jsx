@@ -1,10 +1,4 @@
 import React, { useEffect, useState, useRef } from 'react';
-import {
-  GridComponent, Inject, ColumnsDirective,
-  ColumnDirective, Search, Page, Toolbar, ExcelExport
-} from '@syncfusion/ej2-react-grids';
-
-import { employeesData, maintenanceHistoryGrid } from '../../data/dummy';
 import { Header } from '../../components';
 import axios from "axios";
 import { Link, NavLink } from "react-router-dom";

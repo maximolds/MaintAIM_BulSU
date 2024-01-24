@@ -7,6 +7,7 @@ import { Tooltip } from 'react-tooltip';
 import { links } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 import { ShowComponents } from '../components'
+import image1 from '../assets/images/maintaim_full.png'
 
 const Sidebar = () => {
   const { activeMenu, setActiveMenu,
@@ -30,10 +31,10 @@ const Sidebar = () => {
         {/* change mt-20 after defense*/}
         <div className='flex justify-between items-center'>
           <Link to="/" onClick={handleCloseSideBar}
-            className='items-center gap-3 ml-3 mt-4 flex 
+            className='items-center gap-0 ml-3 mt-5 flex 
           text-xl font-extrabold tracking-tight
           dark:text-white text-slate-900'>
-            <SiShopware /> <span>MaintAIM</span>
+             <img src={image1} alt="Description of Image 1" width="200" height="50" />
           </Link>
 
           <a id="menu">

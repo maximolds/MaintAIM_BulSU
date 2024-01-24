@@ -1,11 +1,18 @@
 import React from 'react';
 import { AiOutlineCalendar, AiOutlineShoppingCart, AiOutlineAreaChart, AiOutlineBarChart, AiOutlineStock } from 'react-icons/ai';
 import { FiShoppingBag, FiEdit, FiPieChart, FiBarChart, FiCreditCard, FiStar, FiShoppingCart } from 'react-icons/fi';
+
+import { GrSchedule } from "react-icons/gr";
+import { FaHistory } from "react-icons/fa";
+import { IoDocumentAttach, IoChatbubbleSharp  } from "react-icons/io5";
+import { AiOutlineAudit } from "react-icons/ai";
+import { IoMdSettings } from "react-icons/io";
+
 import { BsKanban, BsBarChart, BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft } from 'react-icons/bs';
 import { BiColorFill } from 'react-icons/bi';
 import { IoMdContacts } from 'react-icons/io';
 import { RiContactsLine, RiStockLine } from 'react-icons/ri';
-import { MdOutlineSupervisorAccount } from 'react-icons/md';
+import { MdOutlineSupervisorAccount, MdDashboard, MdChecklist } from 'react-icons/md';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { TiTick } from 'react-icons/ti';
 import { GiLouvrePyramid } from 'react-icons/gi';
@@ -475,7 +482,7 @@ export const links = [
     links: [
       {
         name: 'maintaim',
-        icon: <FiShoppingBag />,
+        icon: <MdDashboard />,
       },
     ],
   },
@@ -486,55 +493,35 @@ export const links = [
       
       {
         name: 'maintenance-schedule',
-        icon: <IoMdContacts />,
+        icon: <GrSchedule />,
       },
       {
         name: 'maintenance-history',
-        icon: <RiContactsLine />,
+        icon: <FaHistory />,
       },
       {
         name: 'checklists',
-        icon: <RiContactsLine />,
+        icon: <MdChecklist />,
       },
       {
         name: 'documenation',
-        icon: <RiContactsLine />,
+        icon: <IoDocumentAttach />,
       },
       {
         name: 'audits',
-        icon: <RiContactsLine />,
+        icon: <AiOutlineAudit />,
       },
       {
         name: 'settings',
-        icon: <RiContactsLine />,
+        icon: <IoMdSettings />,
       },
       {
         name: 'user-guide',
-        icon: <RiContactsLine />,
+        icon: <IoChatbubbleSharp />,
       },
     ],
   },
   
-  {
-    title: 'Charts',
-    links: [
-      {
-        name: 'line',
-        icon: <AiOutlineStock />,
-      },
-
-      {
-        name: 'bar',
-        icon: <AiOutlineBarChart />,
-      },
-
-      {
-        name: 'financial',
-        icon: <RiStockLine />,
-      },
-     
-    ],
-  },
 ];
 
 export const cartData = [

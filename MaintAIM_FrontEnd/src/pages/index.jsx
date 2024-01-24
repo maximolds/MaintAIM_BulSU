@@ -30,3 +30,5 @@ export { default as MonthlyPMUHUpdate } from './ChecklistActions/MonthlyPMUHUpda
 export { default as MonthlyPMULUpdate } from './ChecklistActions/MonthlyPMULUpdate'
 export { default as MonthlyPMULRead } from './ChecklistActions/MonthlyPMULRead'
 export { default as MonthlyPMUHRead } from './ChecklistActions/MonthlyPMUHRead'
+export { default as MaintenanceHistoryUpdate } from './History/MaintenanceHistoryUpdate'
+export { default as MaintenanceHistoryRead } from './History/MaintenanceHistoryRead'

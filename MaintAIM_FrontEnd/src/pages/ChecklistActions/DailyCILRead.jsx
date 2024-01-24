@@ -27,10 +27,6 @@ function DailyCILRead() {
 
     return (
         <div>
-
-
-
-
             <div className='flex justify-end mt-2 mr-4'>
                 <Link
                     to={`/daily/update/${id}`}

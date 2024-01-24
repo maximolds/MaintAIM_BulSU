@@ -7,8 +7,16 @@ import { useReactToPrint } from 'react-to-print'
 
 const MaintenanceHistory = () => {
 
-  
+
   const [isClicked, setIsClicked] = useState(false);
+
+  const [authState, setAuthState] = useState({
+    username: "",
+    id: 0,
+    firstname: "",
+    status: false,
+    role: "",
+  });
 
   const historycolumns = [
     {
@@ -45,15 +53,18 @@ const MaintenanceHistory = () => {
       name: 'Action',
       cell: row => (
         <div className="flex justify-center items-center">
-          <Link
-            className={`w-10 h-5 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
-            to={`/daily/update/${row.id}`}
-          >
-            Edit
-          </Link>
+          {(authState.role === "Admin" || authState.role === "Manager") && (
+            <Link
+              className={`w-10 h-5 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+              to={`/maintenance-history/update/${row.id}`}
+            >
+              Edit
+            </Link>
+          )}
+
           <Link
             className={`m-2 w-10 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
-            to={`/daily/read/${row.id}`}
+            to={`/maintenance-history/read/${row.id}`}
           >
             Read
           </Link>
@@ -82,8 +93,30 @@ const MaintenanceHistory = () => {
     setFilteredPersonnel(result)
   }, [search])
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/auth/auth", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState({ ...authState, status: false });
+        } else {
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            firstname: response.data.firstname,
+            role: response.data.role,
+            status: true,
+          });
+        }
+      });
+  }, []);
+
   const generateHistoryPDF = useReactToPrint({
-    content: () => dailyPdf.current,
+    content: () => historyPdf.current,
     documentTitle: `Maintenance History`,
     onAfterPrint: () => alert("Data saved in PDF")
   });

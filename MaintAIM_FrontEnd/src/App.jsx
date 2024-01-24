@@ -1,23 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { Tooltip } from 'react-tooltip'
-
 import { Navbar, Footer, Sidebar, ThemeSettings, ShowComponents } from './components';
 import {
   Dashboard, MaintenanceSchedule, MaintenanceHistory,
   Checklists, Documentation, Audits, Settings,
   UserGuide, Line, HistoryAddRecord, Login, Registration, ChecklistsMenu,
-  DailyCIL, MonthlyPM13, MonthlyPM14, MonthlyPMUH, MonthlyPMUL, Profile, DailyCILUpdate, DailyCILRead, MonthlyPM13Update, MonthlyPM13Read, MonthlyPM14Update, MonthlyPM14Read, MonthlyPMUHUpdate, MonthlyPMULUpdate, MonthlyPMULRead, MonthlyPMUHRead
+  DailyCIL, MonthlyPM13, MonthlyPM14, MonthlyPMUH, MonthlyPMUL, Profile,
+  DailyCILUpdate, DailyCILRead, MonthlyPM13Update, MonthlyPM13Read,
+  MonthlyPM14Update, MonthlyPM14Read, MonthlyPMUHUpdate,
+  MonthlyPMULUpdate, MonthlyPMULRead, MonthlyPMUHRead, MaintenanceHistoryUpdate, MaintenanceHistoryRead
 } from './pages';
-
 import { useStateContext } from './contexts/ContextProvider';
 import ProtectedRoutes from '../utils/ProtectedRoutes';
-
-
 import './App.css'
-
-
+import axios from 'axios';
 
 
 
@@ -26,6 +24,35 @@ import './App.css'
 const App = () => {
   const { activeMenu, themeSettings, setThemeSettings,
     currentColor, currentMode } = useStateContext();
+
+const [authState, setAuthState] = useState({
+  username: "",
+  id: 0,
+  firstname: "",
+  status: false,
+  role: "",
+});
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/auth/auth", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState({ ...authState, status: false });
+        } else {
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            firstname: response.data.firstname,
+            role: response.data.role,
+            status: true,
+          });
+        }
+      });
+  }, []);
 
 
   return (
@@ -114,7 +141,9 @@ const App = () => {
                   <Route path="/user-guide" element={<UserGuide />} />
 
                   {/* Chechlist Actions */}
-
+                  {(authState.role === "Admin" || authState.role === "Manager") && (
+                    <Route path="/maintenance-history/update/:id" element={<MaintenanceHistoryUpdate />} />
+                  )}
                   <Route path='/daily/read/:id' element={<DailyCILRead />} />
                   <Route path='/daily/update/:id' element={<DailyCILUpdate />} />
                   <Route path='/crane13/update/:id' element={<MonthlyPM13Update />} />
@@ -129,6 +158,7 @@ const App = () => {
 
                   <Route path="/history-add-record" element={<HistoryAddRecord />} />
 
+                  <Route path="/maintenance-history/read/:id" element={<MaintenanceHistoryRead />} />
                   {/* Pages outside sidebar (History) */}
 
                   <Route path="/dailycil" element={<DailyCIL />} />

@@ -31,10 +31,10 @@ const MenuButton = ({ title, customFunc, icon,
       </button>
     </a>
     <Tooltip
-        anchorSelect="#menu"
-        content="Menu"
-        place="bottom"
-      />
+      anchorSelect="#menu"
+      content="Menu"
+      place="bottom"
+    />
   </div>
 
 );
@@ -127,7 +127,7 @@ const Navbar = () => {
 
   const EmailButton = ({ title, customFunc, icon,
     color, dotColor }) => (
-    <div>
+    <div className="mr-2">
       <a id="email">
         <button
           type="button"
@@ -207,17 +207,17 @@ const Navbar = () => {
       />
 
       <div className="flex">
-      
 
-        {authState.role === "Admin" && (
-          <EmailButton
-            title="Email"
-            dotColor='#03C9D7'
-            color={currentColor}
-            icon={<EmailIcon />} />
-        )}
 
-    
+
+        <EmailButton
+          title="Email"
+          dotColor='#03C9D7'
+          color={currentColor}
+          icon={<EmailIcon />} />
+
+
+
 
 
         <UserProfileButton />
