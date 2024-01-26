@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link, NavLink } from 'react-router-dom';
 import { useStateContext } from '../../contexts/ContextProvider';
 import { useReactToPrint } from 'react-to-print'
 import axios from 'axios';
+import crane14image from '../../assets/images/crane14.jpg'
 function MonthlyPM14Read() {
 
     let navigate = useNavigate();
@@ -3684,9 +3685,9 @@ function MonthlyPM14Read() {
                         </tr>
                     </table>
                     <h2 className="text-2xl font-extrabold dark:text-gray-200 mb-2">CHAIN ELONGATION MEASUREMENT:</h2>
-                    <img src="C:\Users\Angeline Baluyot\Downloads\CHAIN ELONGATION MEASUREMENT_crane14.jpg" alt="CHAIN ELONGATION MEASUREMENT:" />
+                    <img src={crane14image} alt="Chain Elongation Crane 14" width="[100%]" height="50" />
 
-                    <h2 className="text-2xl font-extrabold dark:text-gray-200 mb-2">INSPECTION SUMMARY/RECOMMENDATION:</h2>
+                    <h2 className="mt-10 text-2xl font-extrabold dark:text-gray-200 mb-2">INSPECTION SUMMARY/RECOMMENDATION:</h2>
                     <div class="inspection-summary">
                         <textarea id="crane14_REPORT_SUMMARY" name="crane14_REPORT_SUMMARY"></textarea>
                     </div>

@@ -5,6 +5,7 @@ import { useStateContext } from '../../contexts/ContextProvider';
 import './MonthlyPM13.css'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
+import crane13image from '../../assets/images/crane13.jpg'
 function MonthlyPM13() {
 
     let navigate = useNavigate();
@@ -2986,7 +2987,7 @@ items-center text-center`}
                     </tr>
                 </table>
                 <h2 className='text-xl font-extrabold ml-3 mt-5 mb-2 dark:text-gray-200'>CHAIN ELONGATION MEASUREMENT:</h2>
-                <img src="C:\Users\Angeline Baluyot\Downloads\Crane13.jpg" alt="CHAIN ELONGATION MEASUREMENT:" />
+                <img src={crane13image} alt="Chain Elongation Crane 13" width="[100%]" height="50" />
 
                 <h2 className='text-xl font-extrabold ml-3 mt-5 mb-2 dark:text-gray-200'>INSPECTION SUMMARY/RECOMMENDATION:</h2>
                 <div class="inspection-summary">

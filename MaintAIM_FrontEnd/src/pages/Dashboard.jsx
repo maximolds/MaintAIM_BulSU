@@ -40,10 +40,10 @@ const Dashboard = () => {
           items-center'>
                 <div>
                   <p className='font-bold text-5xl
-              text-gray-400'>Maint
+              text-green-200'>Maint
                     <span style={{ color: currentColor }}> AIM</span>
                   </p>
-                  <p className='text-sm'>A Computerized Management System of Asia
+                  <p className='text-sm text-gray-300'>A Computerized Management System of Asia
                     Integrated Machine Inc.
                   </p>
                 </div>

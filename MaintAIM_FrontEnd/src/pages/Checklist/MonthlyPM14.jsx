@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import "./DailyCIL.css"
 import axios from 'axios';
+import crane14image from '../../assets/images/crane14.jpg'
 
 function MonthlyPM14() {
 
@@ -2999,9 +3000,9 @@ items-center text-center`}
             </tr>
           </table>
           <h2 className="text-2xl font-extrabold dark:text-gray-200 mb-2">CHAIN ELONGATION MEASUREMENT:</h2>
-          <img src="C:\Users\Angeline Baluyot\Downloads\CHAIN ELONGATION MEASUREMENT_crane14.jpg" alt="CHAIN ELONGATION MEASUREMENT:" />
+          <img src={crane14image} alt="Chain Elongation Crane 14" width="[100%]" height="50" />
 
-          <h2 className="text-2xl font-extrabold dark:text-gray-200 mb-2">INSPECTION SUMMARY/RECOMMENDATION:</h2>
+          <h2 className="mt-10 text-2xl font-extrabold dark:text-gray-200 mb-2">INSPECTION SUMMARY/RECOMMENDATION:</h2>
           <div class="inspection-summary">
             <textarea id="crane14_REPORT_SUMMARY" name="crane14_REPORT_SUMMARY"></textarea>
           </div>

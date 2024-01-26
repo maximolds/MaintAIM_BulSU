@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link, NavLink } from 'react-router-dom';
 import { useStateContext } from '../../contexts/ContextProvider';
 import { useReactToPrint } from 'react-to-print'
 import axios from 'axios';
+import ulimage from '../../assets/images/UL.jpg'
 function MonthlyPMULRead() {
 
     let navigate = useNavigate();
@@ -2168,7 +2169,7 @@ items-center text-center`}
                         </tr>
                     </table>
                     <h2 className='text-2xl font-extrabold dark:text-gray-200 mb-3'>CHAIN ELONGATION MEASUREMENT:</h2>
-                    <img src="C:/Users/Angeline Baluyot/Downloads/CHAIN ELONGATION MEASUREMENT.jpg" alt="CHAIN ELONGATION MEASUREMENT:" />
+                    <img src={ulimage} alt="Chain Elongation Crane 3 & 4" width="[100%]" height="50" />
 
                     <h2 className='text-2xl font-extrabold dark:text-gray-200 mb-3'>INSPECTION SUMMARY/RECOMMENDATION:</h2>
                     <div class="inspection-summary">
