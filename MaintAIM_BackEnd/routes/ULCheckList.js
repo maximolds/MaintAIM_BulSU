@@ -28,6 +28,17 @@ router.put("/update/byId/:id", async (req, res) => {
 
 });
 
+router.delete("/:ulId", async (req, res) => {
+    const ulId = req.params.ulId;
+    await ULCheckList.destroy({
+      where: {
+        id: ulId,
+      },
+    });
+  
+    res.json("DELETED SUCCESSFULLY");
+  });
+
 
 
 

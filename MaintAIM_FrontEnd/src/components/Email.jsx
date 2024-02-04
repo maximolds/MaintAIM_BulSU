@@ -20,7 +20,7 @@ function Email({ visble, onClose }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/auth/auth", {
+      .get("https://maintaim-db-5eb6eb864ba7.herokuapp.com/auth/auth", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -57,8 +57,8 @@ function Email({ visble, onClose }) {
 
   return (
     <div id='container' onClick={handleOnClose} className="fixed inset-0 z-10000 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center">
-      <div className="bg-white rounded-lg w-[800px] h-[500px]">
-        <div className='flex w-[800px] p-3 h-[50px] justify-between border-b-1 border-black 
+      <div className="bg-white rounded-lg md:w-[800px] w-[400px] h-[500px]">
+        <div className='flex md:w-[800px] w-[400px] p-3 h-[50px] justify-between border-b-1 border-black 
          rounded-t-[10px]' style={{ backgroundColor: currentColor }}>
           <h1 className="font-semibold text-left text-xl text-gray-700">
             New Message

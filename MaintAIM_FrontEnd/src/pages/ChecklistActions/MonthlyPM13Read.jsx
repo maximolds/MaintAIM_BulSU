@@ -695,7 +695,7 @@ function MonthlyPM13() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/crane13checklist/byId/${id}`).then((response) => {
+        axios.get(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/crane13checklist/byId/${id}`).then((response) => {
             setListOfCrane13CheckList(response.data)
             setInitialValues(response.data)
             console.log(response.data)
@@ -713,7 +713,7 @@ function MonthlyPM13() {
 
 
         <div>
-            <div className='flex justify-end mt-2 mr-4'>
+            <div className='flex justify-end mt-20 mr-4 md:mt-10'>
                 <Link
                     to={`/daily/update/${id}`}
                     //onClick={()=>navigate(-1)}
@@ -748,7 +748,7 @@ function MonthlyPM13() {
                 </button>
             </div>
 
-            <form id="checklistForm" >
+            <form id="checklistForm" className='bg-[#f3f5f5]'>
                 <div ref={componentPdf} style={{ width: '100%' }}>
                     <h1 className='text-3xl font-extrabold dark:text-gray-200'>CRANE 13 INSPECTION CHECKLIST (MONTHLY)</h1>
 

@@ -12,7 +12,8 @@ function LogoutConfirm({ visble, onClose }) {
         isClicked, setIsClicked, handleClick,
         screenSize, setScreenSize, currentColor,
         showEmailModal, setShowEmailModal, handleOnClose,
-        showUserProfileModal, setShowUserProfileModal } = useStateContext();
+        showUserProfileModal, setShowUserProfileModal,
+        showLogoutModal, setShowLogoutModal } = useStateContext();
 
     const handleOnCloseConfirm = (e) => {
         if (e.target.id === 'container')
@@ -26,10 +27,17 @@ function LogoutConfirm({ visble, onClose }) {
         role:"",
         status: false,
       });
+
+
+      useEffect(() => {
+        setShowUserProfileModal(false);
+        setShowLogoutModal(false);
+    }, []);
+      
     
       useEffect(() => {
         axios
-          .get("http://localhost:3001/auth/auth", {
+          .get("https://maintaim-db-5eb6eb864ba7.herokuapp.com/auth/auth", {
             headers: {
               accessToken: localStorage.getItem("accessToken"),
             },

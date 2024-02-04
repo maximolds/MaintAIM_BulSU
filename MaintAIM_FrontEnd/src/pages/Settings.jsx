@@ -13,7 +13,7 @@ const Settings = () => {
   const { activeMenu, setActiveMenu } = useStateContext();
 
   useEffect(() => {
-    axios.get("http://localhost:3001/auth").then((response) => {
+    axios.get("https://maintaim-db-5eb6eb864ba7.herokuapp.com/auth").then((response) => {
       setListOfUsers(response.data);
     });
   }, []);
@@ -28,7 +28,7 @@ const Settings = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/auth/auth", {
+      .get("https://maintaim-db-5eb6eb864ba7.herokuapp.com/auth/auth", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -48,6 +48,15 @@ const Settings = () => {
       });
   }, []);
 
+  const deleteUser = (id) => {
+    axios
+      .delete(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/auth/${id}`, {
+      })
+      .then(() => {
+        alert(`delete row daily ${id}`)
+      });
+  }
+
   return (
 
 
@@ -58,7 +67,7 @@ const Settings = () => {
           title="User Manager"
         />
 
-        {(authState.role === "Admin" || authState.role === "Staff") && (
+        {(authState.role === "Admin" ) && (
           <NavLink
             to={`/registration`}
             className={`text-12 font-extrabold opacity-0.9 p-4 hover:bg-white w-97 h-4
@@ -92,10 +101,24 @@ const Settings = () => {
                       <UserIcon />
                     </div>
                   </div>
-                  <div className='pl-3'>
-                    <div><span className='font-bold text-black'>Username: </span>{value.username}</div>
-                    <div><span className='font-bold text-black'>Email: </span>{value.email}</div>
-                    <div><span className='font-bold text-black'>Role: </span>{value.role}</div>
+                  <div className='flex flex-col justify-between'>
+                    <div className='pl-3'>
+                      <div><span className='font-bold text-black'>Username: </span>{value.username}</div>
+                      <div><span className='font-bold text-black'>Email: </span>{value.email}</div>
+                      <div><span className='font-bold text-black'>Role: </span>{value.role}</div>
+                    </div>
+                    {(authState.role === "Admin") && (
+                    <div className=''>
+                      <button
+                        className={' m-2 w-20 h-5  rounded-md bg-[#ffffff] text-[#86ACBB] hover:bg-red-500 focus:bg-red-500'}
+                        onClick={() => {
+                          deleteUser(value.id)
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                    )}
                   </div>
 
                 </div>

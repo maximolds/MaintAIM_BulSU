@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         date_replaced:{
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
         },
         previous_date_replaced:{
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
         },
         username:{

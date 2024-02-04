@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true
         },
         UH_crane_date: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: true
         },
         UH_crane_time_start: {

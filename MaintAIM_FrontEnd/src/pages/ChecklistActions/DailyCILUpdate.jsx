@@ -109,7 +109,7 @@ function DailyCILUpdate() {
     let navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/dailychecklist/byId/${id}`).then((response) => {
+        axios.get(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/dailychecklist/byId/${id}`).then((response) => {
             setListOfDailyCheckList(response.data)
             setInitialValues(response.data)
             console.log(response.data)
@@ -123,7 +123,7 @@ function DailyCILUpdate() {
     const onSubmit = (e) => {
         e.preventDefault();
         axios.put(
-            `http://localhost:3001/dailychecklist/update/byId/${id}`, initialValues).then(res => {
+            `https://maintaim-db-5eb6eb864ba7.herokuapp.com/dailychecklist/update/byId/${id}`, initialValues).then(res => {
                 console.log(res);
                 navigate('/checklists')
             }).catch(err => console.log(err));
@@ -134,12 +134,12 @@ function DailyCILUpdate() {
 
 
     return (
-        <div>
+        <div className='w-full h-full'>
 
 
-            <form id="checklistForm" onSubmit={onSubmit}>
+            <form id="checklistForm" onSubmit={onSubmit} className='bg-[#f3f5f5]'>
                 <h1 className='text-3xl font-extrabold dark:text-gray-200 mb-5'>DailyCIL
-                    <span style={{ color: currentColor }}> {id}</span>
+                    
                 </h1>
                 <div className='flex mt-2'>
                     <button

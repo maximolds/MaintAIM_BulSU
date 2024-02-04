@@ -30,6 +30,16 @@ router.put("/update/byId/:id", async (req, res) => {
 
 });
 
+router.delete("/:dailyId", async (req, res) => {
+    const dailyId = req.params.dailyId;
+    await DailyCheckList.destroy({
+      where: {
+        id: dailyId,
+      },
+    });
+  
+    res.json("DELETED SUCCESSFULLY");
+  });
 
 
 

@@ -693,7 +693,7 @@ function MonthlyPM13Update() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/crane13checklist/byId/${id}`).then((response) => {
+        axios.get(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/crane13checklist/byId/${id}`).then((response) => {
             setListOfCrane13CheckList(response.data)
             setInitialValues(response.data)
             console.log(response.data)
@@ -703,7 +703,7 @@ function MonthlyPM13Update() {
     const onSubmit = (e) => {
         e.preventDefault();
         axios.put(
-            `http://localhost:3001/crane13checklist/update/byId/${id}`, initialValues).then(res => {
+            `https://maintaim-db-5eb6eb864ba7.herokuapp.com/crane13checklist/update/byId/${id}`, initialValues).then(res => {
                 console.log(res);
                 navigate('/checklists')
             }).catch(err => console.log(err));
@@ -714,7 +714,7 @@ function MonthlyPM13Update() {
 
 
 
-        <form id="checklistForm" onSubmit={onSubmit}>
+        <form id="checklistForm" onSubmit={onSubmit} className='bg-[#f3f5f5]'>
             <h1 className='text-3xl font-extrabold dark:text-gray-200'>CRANE 13 INSPECTION CHECKLIST (MONTHLY)</h1>
             <div className='flex mt-2'>
                 <button

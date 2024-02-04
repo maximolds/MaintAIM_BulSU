@@ -29,5 +29,16 @@ router.put("/update/byId/:id", async (req, res) => {
 
 });
 
+router.delete("/:historyId", async (req, res) => {
+    const historyId = req.params.historyId;
+    await MaintenanceHistory.destroy({
+      where: {
+        id: historyId,
+      },
+    });
+  
+    res.json("DELETED SUCCESSFULLY");
+  });
+
 
 module.exports = router

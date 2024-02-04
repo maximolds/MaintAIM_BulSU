@@ -28,6 +28,17 @@ router.put("/update/byId/:id", async (req, res) => {
 
 });
 
+router.delete("/:crane13Id", async (req, res) => {
+    const crane13Id = req.params.crane13Id;
+    await Crane13CheckList.destroy({
+      where: {
+        id: crane13Id,
+      },
+    });
+  
+    res.json("DELETED SUCCESSFULLY");
+  });
+
 
 
 

@@ -330,7 +330,7 @@ function MonthlyPMUH() {
   };
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:3001/uhchecklist", data,
+    axios.post("https://maintaim-db-5eb6eb864ba7.herokuapp.com/uhchecklist", data,
       {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
@@ -351,7 +351,7 @@ function MonthlyPMUH() {
   return (
     <Formik initialValues={initialValues}
       onSubmit={onSubmit}>
-      <Form id="checklistForm">
+      <Form id="checklistForm" className='bg-[#f3f5f5]'>
         <h1>UH CRANE INSPECTION CHECKLIST (MONTHLY)</h1>
 
         <div className='flex mt-2'>

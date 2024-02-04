@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { UserIcon } from '../assets/icons/UserIcon';
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { FaLock } from "react-icons/fa";
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     const login = () => {
         const data = { username: username, password: password };
-        axios.post("http://localhost:3001/auth/login", data).then((response) => {
+        axios.post("https://maintaim-db-5eb6eb864ba7.herokuapp.com/auth/login", data).then((response) => {
             if (response.data.error) {
                 alert(response.data.error);
             } else {
@@ -64,7 +64,7 @@ function Login() {
                             }}
                         />
                         <div className='absolute top-2 left-2 z-10 flex items-center pointer-events-none'>
-                            <UserIcon />
+                            <FaLock />
                         </div>
                     </div>
 

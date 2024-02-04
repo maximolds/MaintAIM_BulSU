@@ -13,6 +13,36 @@ const Checklists = () => {
     setIsClicked(!isClicked);
   };
 
+  const [authState, setAuthState] = useState({
+    username: "",
+    id: 0,
+    firstname: "",
+    status: false,
+    role: "",
+  });
+
+  useEffect(() => {
+    axios
+      .get("https://maintaim-db-5eb6eb864ba7.herokuapp.com/auth/auth", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState({ ...authState, status: false });
+        } else {
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            firstname: response.data.firstname,
+            role: response.data.role,
+            status: true,
+          });
+        }
+      });
+  }, []);
+
   const dailycolumns = [
     {
       name: 'ID',
@@ -25,7 +55,7 @@ const Checklists = () => {
       sortable: true,
     },
     {
-      name: 'Insepecte by',
+      name: 'Inspected by',
       selector: row => row.Daily_CIL_inspected_by,
       sortable: true,
     },
@@ -44,17 +74,27 @@ const Checklists = () => {
       cell: row => (
         <div className="flex justify-center items-center">
           <Link
-            className={`w-10 h-5 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            className={`w-10 h-5 justify-center items-center rounded-md bg-[#d0e272] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
             to={`/daily/update/${row.id}`}
           >
             Edit
           </Link>
           <Link
-            className={`m-2 w-10 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            className={`m-2 w-10 justify-center items-center rounded-md bg-[#1ecbe1] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
             to={`/daily/read/${row.id}`}
           >
             Read
           </Link>
+          {(authState.role === "Admin" || authState.role === "Manager") && (
+            <button
+              className={`w-11 h-5 justify-center items-center rounded-md bg-red-500 text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+              onClick={() => {
+                deleteDaily(row.id)
+              }}
+            >
+              Delete
+            </button>
+          )}
         </div>
       ),
     },
@@ -72,7 +112,7 @@ const Checklists = () => {
       sortable: true,
     },
     {
-      name: 'Insepected by',
+      name: 'Inspected by',
       selector: row => row.ul_crane_inspected_by,
       sortable: true,
     },
@@ -91,17 +131,27 @@ const Checklists = () => {
       cell: row => (
         <div className="flex justify-center items-center">
           <Link
-            className={`w-10 h-5 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            className={`w-10 h-5 justify-center items-center rounded-md bg-[#d0e272] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
             to={`/pmul/update/${row.id}`}
           >
             Edit
           </Link>
           <Link
-            className={`m-2 w-10 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            className={`m-2 w-10 justify-center items-center rounded-md bg-[#1ecbe1] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
             to={`/pmul/read/${row.id}`}
           >
             Read
           </Link>
+          {(authState.role === "Admin" || authState.role === "Manager") && (
+            <button
+              className={`m-2 w-11 h-5 justify-center items-center rounded-md bg-red-500 text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+              onClick={() => {
+                deleteUL(row.id)
+              }}
+            >
+              Delete
+            </button>
+          )}
         </div>
       ),
     },
@@ -119,7 +169,7 @@ const Checklists = () => {
       sortable: true,
     },
     {
-      name: 'Insepected by',
+      name: 'Inspected by',
       selector: row => row.UH_crane_inspected_by,
       sortable: true,
     },
@@ -138,17 +188,27 @@ const Checklists = () => {
       cell: row => (
         <div className="flex justify-center items-center">
           <Link
-            className={`w-10 h-5 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            className={`w-10 h-5 justify-center items-center rounded-md bg-[#d0e272] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
             to={`/pmuh/update/${row.id}`}
           >
             Edit
           </Link>
           <Link
-            className={`m-2 w-10 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            className={`m-2 w-10 justify-center items-center rounded-md bg-[#1ecbe1] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
             to={`/pmuh/read/${row.id}`}
           >
             Read
           </Link>
+          {(authState.role === "Admin" || authState.role === "Manager") && (
+            <button
+              className={`m-2 w-11 h-5 justify-center items-center rounded-md bg-red-500 text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+              onClick={() => {
+                deleteUH(row.id)
+              }}
+            >
+              Delete
+            </button>
+          )}
         </div>
       ),
     },
@@ -166,7 +226,7 @@ const Checklists = () => {
       sortable: true,
     },
     {
-      name: 'Insepected by',
+      name: 'Inspected by',
       selector: row => row.crane13_inspected_by,
       sortable: true,
     },
@@ -185,17 +245,27 @@ const Checklists = () => {
       cell: row => (
         <div className="flex justify-center items-center">
           <Link
-            className={`w-10 h-5 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            className={`w-10 h-5 justify-center items-center rounded-md bg-[#d0e272] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
             to={`/crane13/update/${row.id}`}
           >
             Edit
           </Link>
           <Link
-            className={`m-2 w-10 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            className={`m-2 w-10 justify-center items-center rounded-md bg-[#1ecbe1] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
             to={`/crane13/read/${row.id}`}
           >
             Read
           </Link>
+          {(authState.role === "Admin" || authState.role === "Manager") && (
+            <button
+              className={`m-2 w-11 h-5 justify-center items-center rounded-md bg-red-500 text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+              onClick={() => {
+                deleteCrane13(row.id)
+              }}
+            >
+              Delete
+            </button>
+          )}
         </div>
       ),
     },
@@ -213,7 +283,7 @@ const Checklists = () => {
       sortable: true,
     },
     {
-      name: 'Insepected by',
+      name: 'Inspected by',
       selector: row => row.crane14_inspected_by,
       sortable: true,
     },
@@ -232,17 +302,27 @@ const Checklists = () => {
       cell: row => (
         <div className="flex justify-center items-center">
           <Link
-            className={`w-10 h-5 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            className={`w-10 h-5 justify-center items-center rounded-md bg-[#d0e272] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
             to={`/crane14/update/${row.id}`}
           >
             Edit
           </Link>
           <Link
-            className={`m-2 w-10 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            className={`m-2 w-10 justify-center items-center rounded-md bg-[#1ecbe1] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
             to={`/crane14/read/${row.id}`}
           >
             Read
           </Link>
+          {(authState.role === "Admin" || authState.role === "Manager") && (
+            <button
+              className={`m-2 w-11 h-5 justify-center items-center rounded-md bg-red-500 text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+              onClick={() => {
+                deleteCrane14(row.id)
+              }}
+            >
+              Delete
+            </button>
+          )}
         </div>
       ),
     },
@@ -278,35 +358,35 @@ const Checklists = () => {
   const crane14Pdf = useRef();
 
   useEffect(() => {
-    axios.get("http://localhost:3001/dailychecklist").then((response) => {
+    axios.get("https://maintaim-db-5eb6eb864ba7.herokuapp.com/dailychecklist").then((response) => {
       setListOfDailyCheckList(response.data);
       setFilteredPersonnel(response.data)
     });
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/ulchecklist').then((response) => {
+    axios.get('https://maintaim-db-5eb6eb864ba7.herokuapp.com/ulchecklist').then((response) => {
       setListOfCraneULCheckList(response.data);
       setulFilteredPersonnel(response.data);
     });
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/uhchecklist').then((response) => {
+    axios.get('https://maintaim-db-5eb6eb864ba7.herokuapp.com/uhchecklist').then((response) => {
       setListOfCraneUHheckList(response.data);
       setuhFilteredPersonnel(response.data);
     });
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/crane13checklist').then((response) => {
+    axios.get('https://maintaim-db-5eb6eb864ba7.herokuapp.com/crane13checklist').then((response) => {
       setListOfCrane13CheckList(response.data);
       setcrane13FilteredPersonnel(response.data);
     });
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:3001/crane14checklist').then((response) => {
+    axios.get('https://maintaim-db-5eb6eb864ba7.herokuapp.com/crane14checklist').then((response) => {
       setListOfCrane14CheckList(response.data);
       setcrane14FilteredPersonnel(response.data);
     });
@@ -314,7 +394,11 @@ const Checklists = () => {
 
   useEffect(() => {
     const result = listOfDailyCheckList.filter(person => {
-      return person.Daily_CIL_inspected_by.toLowerCase().match(search.toLowerCase());
+      return String(person.Daily_CIL_Crane_Number).toLowerCase().match(search.toLowerCase()) ||
+      String(person.Daily_CIL_inspected_by).toLowerCase().match(search.toLowerCase()) ||
+      String(person.Daily_CIL_date).toLowerCase().match(search.toLowerCase()) ||
+      String(person.id).toLowerCase().match(search.toLowerCase()) ||
+      String(person.Daily_CIL_approved_by).toLowerCase().match(search.toLowerCase());
     })
 
     setFilteredPersonnel(result)
@@ -322,7 +406,11 @@ const Checklists = () => {
 
   useEffect(() => {
     const ulresult = listOfCraneULCheckList.filter(ulperson => {
-      return ulperson.ul_crane_inspected_by.toLowerCase().match(ulsearch.toLowerCase());
+      return String(ulperson.ul_crane_no).toLowerCase().match(ulsearch.toLowerCase()) ||
+      String(ulperson.ul_crane_inspected_by).toLowerCase().match(ulsearch.toLowerCase()) ||
+      String(ulperson.ul_crane_date).toLowerCase().match(ulsearch.toLowerCase()) ||
+      String(ulperson.id).toLowerCase().match(ulsearch.toLowerCase()) ||
+      String(ulperson.ul_crane_approved_by).toLowerCase().match(ulsearch.toLowerCase());
     })
 
     setulFilteredPersonnel(ulresult)
@@ -330,7 +418,11 @@ const Checklists = () => {
 
   useEffect(() => {
     const uhresult = listOfCraneUHCheckList.filter(uhperson => {
-      return uhperson.UH_crane_inspected_by.toLowerCase().match(uhsearch.toLowerCase());
+      return String(uhperson.UH_crane_no).toLowerCase().match(uhsearch.toLowerCase()) ||
+      String(uhperson.UH_crane_inspected_by).toLowerCase().match(uhsearch.toLowerCase()) ||
+      String(uhperson.UH_crane_approved_by).toLowerCase().match(uhsearch.toLowerCase()) ||
+      String(uhperson.id).toLowerCase().match(uhsearch.toLowerCase()) ||
+      String(uhperson.UH_crane_date).toLowerCase().match(uhsearch.toLowerCase());
     })
 
     setuhFilteredPersonnel(uhresult)
@@ -338,7 +430,11 @@ const Checklists = () => {
 
   useEffect(() => {
     const crane13result = listOfCrane13CheckList.filter(crane13person => {
-      return crane13person.crane13_inspected_by.toLowerCase().match(crane13Search.toLowerCase());
+      return String(crane13person.crane13_no).toLowerCase().match(crane13Search.toLowerCase()) ||
+      String(crane13person.crane13_inspected_by).toLowerCase().match(crane13Search.toLowerCase()) ||
+      String(crane13person.crane13_approved_by).toLowerCase().match(crane13Search.toLowerCase()) ||
+      String(crane13person.id).toLowerCase().match(crane13Search.toLowerCase()) ||
+      String(crane13person.crane13_date).toLowerCase().match(crane13Search.toLowerCase());
     })
 
     setcrane13FilteredPersonnel(crane13result)
@@ -346,7 +442,11 @@ const Checklists = () => {
 
   useEffect(() => {
     const crane14result = listOfCrane14CheckList.filter(crane14person => {
-      return crane14person.crane14_inspected_by.toLowerCase().match(crane14Search.toLowerCase());
+      return String(crane14person.crane14_no).toLowerCase().match(crane14Search.toLowerCase()) ||
+      String(crane14person.crane14_inspected_by).toLowerCase().match(crane14Search.toLowerCase()) ||
+      String(crane14person.crane14_approved_by).toLowerCase().match(crane14Search.toLowerCase()) ||
+      String(crane14person.id).toLowerCase().match(crane14Search.toLowerCase()) ||
+      String(crane14person.crane14_date).toLowerCase().match(crane14Search.toLowerCase());
     })
 
     setcrane14FilteredPersonnel(crane14result)
@@ -382,6 +482,52 @@ const Checklists = () => {
     onAfterPrint: () => alert("Data saved in PDF")
   });
 
+  const deleteDaily = (id) => {
+    axios
+      .delete(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/dailychecklist/${id}`, {
+      })
+      .then(() => {
+        alert("delete row daily")
+      });
+  }
+
+  const deleteUL = (id) => {
+    axios
+      .delete(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/ulchecklist/${id}`, {
+      })
+      .then(() => {
+        alert("delete row ULCheckList")
+      });
+  }
+
+  const deleteUH = (id) => {
+    axios
+      .delete(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/uhchecklist/${id}`, {
+      })
+      .then(() => {
+        alert("delete row UHCheckList")
+      });
+  }
+
+  const deleteCrane13 = (id) => {
+    axios
+      .delete(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/crane13checklist/${id}`, {
+      })
+      .then(() => {
+        alert("delete row crane13checklist")
+      });
+  }
+
+  const deleteCrane14 = (id) => {
+    axios
+      .delete(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/crane14checklist/${id}`, {
+      })
+      .then(() => {
+        alert("delete row crane14checklist")
+      });
+  }
+
+
 
   return (
 
@@ -409,14 +555,14 @@ const Checklists = () => {
         <DataTable
           columns={dailycolumns}
           data={filteredPersonnel}
-          selectableRows
+
           fixedHeader
           fixedHeaderScrollHeight='400px'
           pagination
           title="Daily Checklist"
           actions={<button
             onClick={generateDailyPDF}
-            className={`w-20 h-5 text-12 bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
+            className={`w-20 h-5 text-12 bg-[#330034] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
             Export</button>}
           subHeader
           subHeaderComponent={
@@ -435,14 +581,14 @@ const Checklists = () => {
         <DataTable
           columns={uhcolumns}
           data={uhfilteredPersonnel}
-          selectableRows
+
           fixedHeader
           fixedHeaderScrollHeight='400px'
           pagination
           title="UH Crane 1 & 2"
           actions={<button
             onClick={generateUHPDF}
-            className={`w-20 h-5 text-12 bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
+            className={`w-20 h-5 text-12 bg-[#330034] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
             Export</button>}
           subHeader
           subHeaderComponent={
@@ -461,14 +607,14 @@ const Checklists = () => {
         <DataTable
           columns={ulcolumns}
           data={ulfilteredPersonnel}
-          selectableRows
+
           fixedHeader
           fixedHeaderScrollHeight='400px'
           pagination
           title="UL Crane 3 & 4"
           actions={<button
             onClick={generateULPDF}
-            className={`w-20 h-5 text-12 bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
+            className={`w-20 h-5 text-12 bg-[#330034] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
             Export</button>}
           subHeader
           subHeaderComponent={
@@ -494,7 +640,7 @@ const Checklists = () => {
           title="Crane 13"
           actions={<button
             onClick={generateCrane13PDF}
-            className={`w-20 h-5 text-12 bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
+            className={`w-20 h-5 text-12 bg-[#330034] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
             Export</button>}
           subHeader
           subHeaderComponent={
@@ -513,14 +659,14 @@ const Checklists = () => {
         <DataTable
           columns={crane14columns}
           data={crane14filteredPersonnel}
-          selectableRows
+
           fixedHeader
           fixedHeaderScrollHeight='400px'
           pagination
           title="Crane 14"
           actions={<button
             onClick={generateCrane14PDF}
-            className={`w-20 h-5 text-12 bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
+            className={`w-20 h-5 text-12 bg-[#330034] text-white hover:bg-[#86acbb] focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
             Export</button>}
           subHeader
           subHeaderComponent={

@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Header } from '../../components';
 import axios from "axios";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import DataTable from 'react-data-table-component';
 import { useReactToPrint } from 'react-to-print'
 
 const MaintenanceHistory = () => {
 
+  let navigate = useNavigate();
 
   const [isClicked, setIsClicked] = useState(false);
 
@@ -55,7 +56,7 @@ const MaintenanceHistory = () => {
         <div className="flex justify-center items-center">
           {(authState.role === "Admin" || authState.role === "Manager") && (
             <Link
-              className={`w-10 h-5 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+              className={`w-10 h-5 justify-center items-center rounded-md bg-[#d0e272] text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
               to={`/maintenance-history/update/${row.id}`}
             >
               Edit
@@ -63,11 +64,20 @@ const MaintenanceHistory = () => {
           )}
 
           <Link
-            className={`m-2 w-10 justify-center items-center rounded-md bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            className={`m-2 w-10 justify-center items-center rounded-md bg-[#1ecbe1] text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
             to={`/maintenance-history/read/${row.id}`}
           >
             Read
           </Link>
+
+          <button
+            className={`w-11 h-5 justify-center items-center rounded-md bg-red-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}
+            onClick={() =>{
+              deleteMaintenanceHistory(row.id)
+            }}
+          >
+            Delete
+          </button>
         </div>
       ),
     },
@@ -79,7 +89,7 @@ const MaintenanceHistory = () => {
   const historyPdf = useRef();
 
   useEffect(() => {
-    axios.get("http://localhost:3001/maintenancehistory").then((response) => {
+    axios.get("https://maintaim-db-5eb6eb864ba7.herokuapp.com/maintenancehistory").then((response) => {
       setListOfMaintenanceHistory(response.data);
       setFilteredPersonnel(response.data);
     });
@@ -95,7 +105,7 @@ const MaintenanceHistory = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/auth/auth", {
+      .get("https://maintaim-db-5eb6eb864ba7.herokuapp.com/auth/auth", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -121,6 +131,14 @@ const MaintenanceHistory = () => {
     onAfterPrint: () => alert("Data saved in PDF")
   });
 
+  const deleteMaintenanceHistory = (id) => {
+    axios
+      .delete(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/maintenancehistory/${id}`, {
+      })
+      .then(() => {
+        alert("delete success")
+      });
+  }
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
@@ -146,14 +164,14 @@ const MaintenanceHistory = () => {
         <DataTable
           columns={historycolumns}
           data={filteredPersonnel}
-          selectableRows
+         
           fixedHeader
           fixedHeaderScrollHeight='400px'
           pagination
           title="Daily Checklist"
           actions={<button
             onClick={generateHistoryPDF}
-            className={`w-20 h-5 text-12 bg-blue-500 text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
+            className={`w-20 h-5 text-12 bg-[#330034] text-white hover:bg-red-500 focus:bg-red-500 ${isClicked ? 'bg-red-500' : ''}`}>
             Export</button>}
           subHeader
           subHeaderComponent={

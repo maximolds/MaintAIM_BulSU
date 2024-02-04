@@ -25,7 +25,7 @@ const MaintenanceHistoryUpdate = () => {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/maintenancehistory/byId/${id}`).then((response) => {
+        axios.get(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/maintenancehistory/byId/${id}`).then((response) => {
             setListOfMaintenanceHistory(response.data)
             setInitialValues(response.data)
             console.log(response.data)
@@ -35,7 +35,7 @@ const MaintenanceHistoryUpdate = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         axios.put(
-            `http://localhost:3001/maintenancehistory/update/byId/${id}`, initialValues).then(res => {
+            `https://maintaim-db-5eb6eb864ba7.herokuapp.com/maintenancehistory/update/byId/${id}`, initialValues).then(res => {
                 console.log(res);
                 navigate('/maintenance-history')
             }).catch(err => console.log(err));
@@ -79,10 +79,10 @@ const MaintenanceHistoryUpdate = () => {
                         Crane Information
                     </h2>
 
-                    <div className='flex-1 md:flex'>
-                        <div className='border-t-2 w-full flex flex-wrap'>
-                            <div className={`flex flex-wrap  
-            ${activeMenu ? 'justify-start md:w-[50%]' : ' justify-start md:w[50%] items-center'}`} >
+                    <div className='flex flex-wrap'>
+                        <div className='border-t-2 w-full'>
+                            <div className={`flex flex-col 
+            ${activeMenu ? 'justify-start md:w-[50%]' : ' flex flex-col justify-start md:w[50%] items-start'}`} >
                                 <div className='mt-5 '>
                                     <p className='text-sm text-black dark:text-white mb-3 font-bold'>
                                         Personnel In-charge
@@ -94,10 +94,10 @@ const MaintenanceHistoryUpdate = () => {
                                         name="personnel_incharge"
                                         type="text"
                                         placeholder='Juan Dela Cruz'
-                                        className='rounded-3xl w-318 h-42 border-2 border-fade-blue  pl-4'
+                                        className='rounded-3xl w-full h-42 border-2 border-fade-blue  pl-4'
                                     />
                                 </div>
-                                <div className='mb-0 mt-5 md:mt-0 md:mb-10'>
+                                <div className='mt-5 '>
                                     <p className='text-sm text-black dark:text-white mb-3 font-bold'>
                                         Crane Number
                                     </p>
@@ -108,12 +108,10 @@ const MaintenanceHistoryUpdate = () => {
                                         name="crane_number"
                                         type="number"
                                         placeholder='Crane 1'
-                                        className='rounded-3xl w-318 h-42 border-2 border-fade-blue pl-4'
+                                        className='rounded-3xl w-full h-42 border-2 border-fade-blue pl-4'
                                     />
                                 </div>
-                            </div>
-                            <div className={`flex flex-wrap   
-            ${activeMenu ? 'justify-start md:w-[50%]' : ' justify-start md:w[50%] items-center'}`}>
+
                                 <div className='mt-5'>
                                     <p className='text-sm text-black dark:text-white mb-3 font-bold'>
                                         Part Replaced
@@ -125,7 +123,7 @@ const MaintenanceHistoryUpdate = () => {
                                         name="part_replaced"
                                         type="text"
                                         placeholder=''
-                                        className='rounded-3xl w-318 h-42 border-2 border-fade-blue  pl-4'
+                                        className='rounded-3xl w-full h-42 border-2 border-fade-blue  pl-4'
                                     />
                                 </div>
                                 <div className='mt-5'>
@@ -139,7 +137,7 @@ const MaintenanceHistoryUpdate = () => {
                                         name="date_replaced"
                                         type="date"
                                         placeholder='Insert Date Here'
-                                        className='rounded-3xl w-318 h-42 border-2 border-fade-blue  pl-4'
+                                        className='rounded-3xl w-full h-42 border-2 border-fade-blue  pl-4'
                                     />
                                 </div>
                                 <div className='mt-5'>
@@ -153,7 +151,7 @@ const MaintenanceHistoryUpdate = () => {
                                         name="previous_date_replaced"
                                         type="date"
                                         placeholder='Insert Date Here'
-                                        className='rounded-3xl w-318 h-42 border-2 border-fade-blue  pl-4'
+                                        className='rounded-3xl w-full h-42 border-2 border-fade-blue  pl-4'
                                     />
                                 </div>
                                 <div className='mt-5'>
@@ -167,7 +165,7 @@ const MaintenanceHistoryUpdate = () => {
                                         name="status"
                                         type="string"
                                         placeholder='Insert Current Status'
-                                        className='rounded-3xl w-318 h-42 border-2 border-fade-blue  pl-4'
+                                        className='rounded-3xl w-full h-42 border-2 border-fade-blue  pl-4'
                                     />
                                 </div>
                             </div>

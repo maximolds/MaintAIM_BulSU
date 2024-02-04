@@ -29,36 +29,34 @@ const Dashboard = () => {
   return (
     <div className='flex'>
       <div className=''>
-        <div className='mt-5'>
+        <div className='mt-20 md:mt-5'>
           <div className='flex flex-wrap lg:flex-nowrap 
       justify-center '>
-            <div className='bg-white dark:text-gray-200
+            <div className="bg-white dark:text-gray-200
         dark:bg-secondary-dark-bg h-44 rounded-xl
-         md:w-[100%] p-8 pt-9 m-3 bg-hero-pattern
-        bg-no-repeat bg-cover bg-center'>
+         md:w-[100%] p-8 pt-9 m-3 bg- bg-[url('../src/assets/images/headerMaintAIM.jpg')]
+        bg-no-repeat bg-cover bg-center">
               <div className='flex justify-between 
           items-center'>
                 <div>
                   <p className='font-bold text-5xl
               text-green-200'>Maint
-                    <span style={{ color: currentColor }}> AIM</span>
+                    <span style={{color: currentColor}}> AIM</span>
                   </p>
-                  <p className='text-sm text-gray-300'>A Computerized Management System of Asia
+                  <p className='text-sm text-gray-200'>A Computerized Management System of Asia
                     Integrated Machine Inc.
                   </p>
                 </div>
               </div>
-              <div className='mt-6'>
+              <div className=''>
                 <NavLink
                   to={`/user-guide`}
                   style={{ backgroundColor: currentColor }}
-
-
-                  className={`text-12 font-extrabold opacity-0.9 p-4 hover:bg-white w-130 h-50
-              pt-5 rounded-xl customShadow m-4  bg-white flex justify-items-center 
+                  className={`text-[14px] font-extrabold opacity-0.9 hover:bg-white w-130 h-50
+               rounded-2xl customShadow2 m-4  mt-8 bg-white justify-center flex items-center text-center
               ${activeMenu ? 'mr-0' : 'mr-0 '}`}
                 >
-                  <p className='text-center '>
+                  <p className='text-center justify-center items-cente '>
                     Learn More
                   </p>
                 </NavLink>
@@ -69,8 +67,8 @@ const Dashboard = () => {
 
           {/* Cards*/}
 
-          <div className='flex-1 md:flex'>
-            <div className={`flex flex-wrap  border-black  
+          <div className='flex-1 md:flex mt-10 md:mt-5'>
+            <div className={`flex flex-wrap  border-black 
             ${activeMenu ? 'justify-center md:w-[60%]' : ' justify-center md:w[40%] items-center'}`}>
 
               {cardsData.map((link) => (
@@ -83,7 +81,7 @@ const Dashboard = () => {
                     ({ isActive }) => ({
                       backgroundColor: isActive ? 'white' : ''
                     })}
-                  className={`text-20 font-extrabold opacity-0.9 p-4 hover:drop-customShadow w-256 h-119
+                  className={`text-[18px] font-extrabold opacity-0.9 p-4 hover:drop-customShadow w-256 h-119
               pt-5 rounded-3xl customShadow m-4  bg-white flex flex-row justify-items-center  
               ${activeMenu ? 'mr-0' : 'mr-0 '}`}>
 

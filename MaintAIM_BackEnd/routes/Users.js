@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { Users } = require('../models')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const multer = require('multer')
 const path = require('path')
 const { validateToken } = require('../middlewares/AuthMiddleware')
@@ -81,5 +81,16 @@ router.post('/login', async (req, res) => {
 router.get("/auth", validateToken, (req, res) => {
     res.json(req.user);
 });
+
+router.delete("/:userId", async (req, res) => {
+    const userId = req.params.userId;
+    await Users.destroy({
+      where: {
+        id: userId,
+      },
+    });
+  
+    res.json("DELETED SUCCESSFULLY");
+  });
 
 module.exports = router

@@ -14,7 +14,7 @@ function MonthlyPMULRead() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/ulchecklist/byId/${id}`).then((response) => {
+        axios.get(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/ulchecklist/byId/${id}`).then((response) => {
             setListOfCraneULCheckList(response.data)
             console.log(response.data)
         });
@@ -30,7 +30,7 @@ function MonthlyPMULRead() {
     return (
 
         <div>
-            <div className='flex justify-end mt-2 mr-4'>
+            <div className='flex justify-end mt-20 mr-4 md:mt-10'>
                 <Link
                     to={`/daily/update/${id}`}
                     //onClick={()=>navigate(-1)}
@@ -65,7 +65,7 @@ function MonthlyPMULRead() {
                 </button>
             </div>
 
-            <form id="checklistForm" >
+            <form id="checklistForm"  className='bg-[#f3f5f5]'>
                 <div ref={componentPdf} style={{ width: '100%' }}>
                     <h1 className='text-3xl font-extrabold dark:text-gray-200 mb-5'>UL CRANE INSPECTION CHECKLIST (MONTHLY)</h1>
 

@@ -701,7 +701,7 @@ function MonthlyPM14() {
   }
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:3001/crane14checklist", data,
+    axios.post("https://maintaim-db-5eb6eb864ba7.herokuapp.com/crane14checklist", data,
       {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
@@ -722,7 +722,7 @@ function MonthlyPM14() {
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit} >
-        <Form id="checklistForm">
+        <Form id="checklistForm" className='bg-[#f3f5f5]'>
           <h1 className="text-3xl font-extrabold dark:text-gray-200 mb-2">CRANE 14 INSPECTION CHECKLIST (MONTHLY)</h1>
 
           <div className='flex mt-2'>

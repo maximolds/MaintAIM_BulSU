@@ -13,7 +13,7 @@ function MonthlyPMUHRead() {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/uhchecklist/byId/${id}`).then((response) => {
+        axios.get(`https://maintaim-db-5eb6eb864ba7.herokuapp.com/uhchecklist/byId/${id}`).then((response) => {
             setListOfUHCheckList(response.data)
 
             console.log(response.data)
@@ -30,7 +30,7 @@ function MonthlyPMUHRead() {
     return (
 
         <div>
-            <div className='flex justify-end mt-2 mr-4'>
+            <div className='flex justify-end mt-20 mr-4 md:mt-10'>
                 <Link
                     to={`/pmuh/update/${id}`}
                     //onClick={()=>navigate(-1)}
@@ -65,7 +65,7 @@ function MonthlyPMUHRead() {
                 </button>
             </div>
 
-            <form id="checklistForm">
+            <form id="checklistForm"  className='bg-[#f3f5f5]'>
                 <div ref={componentPdf} style={{ width: '100%' }}>
                     <h1 classname="text-3xl font-extrabold dark:text-gray-200 mb-2">Crane UH 1 & 2 INSPECTION CHECKLIST (MONTHLY)</h1>
                     <table>

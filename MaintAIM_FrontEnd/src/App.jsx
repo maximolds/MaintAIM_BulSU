@@ -10,7 +10,9 @@ import {
   DailyCIL, MonthlyPM13, MonthlyPM14, MonthlyPMUH, MonthlyPMUL, Profile,
   DailyCILUpdate, DailyCILRead, MonthlyPM13Update, MonthlyPM13Read,
   MonthlyPM14Update, MonthlyPM14Read, MonthlyPMUHUpdate,
-  MonthlyPMULUpdate, MonthlyPMULRead, MonthlyPMUHRead, MaintenanceHistoryUpdate, MaintenanceHistoryRead
+  MonthlyPMULUpdate, MonthlyPMULRead, MonthlyPMUHRead, MaintenanceHistoryUpdate, 
+  MaintenanceHistoryRead,
+  QRScanner
 } from './pages';
 import { useStateContext } from './contexts/ContextProvider';
 import ProtectedRoutes from '../utils/ProtectedRoutes';
@@ -34,7 +36,7 @@ const [authState, setAuthState] = useState({
 });
   useEffect(() => {
     axios
-      .get("http://localhost:3001/auth/auth", {
+      .get("https://maintaim-db-5eb6eb864ba7.herokuapp.com/auth/auth", {
         headers: {
           accessToken: localStorage.getItem("accessToken"),
         },
@@ -134,11 +136,12 @@ const [authState, setAuthState] = useState({
                   <Route path='/maintenance-schedule' element={<MaintenanceSchedule />} />
                   <Route path="/maintenance-history" element={<MaintenanceHistory />} />
                   <Route path="/checklists" element={<Checklists />} />
-                  <Route path="/documenation" element={<Documentation />} />
+                  <Route path="/documentation" element={<Documentation />} />
                   <Route path="/audits" element={<Audits />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/profile/:id" element={<Profile />} />
                   <Route path="/user-guide" element={<UserGuide />} />
+                  <Route path="/qrscan" element={<QRScanner/>} />
 
                   {/* Chechlist Actions */}
                   {(authState.role === "Admin" || authState.role === "Manager") && (
